@@ -43,9 +43,9 @@ public class AuthConfiguration {
 
     UserDetails[] users = {
         User.withUsername("teacher1").password("{bcrypt}$2y$10$PTIElp2sSt4AGXmM/MSMdeactS214M5/DLzjVMzTHMdUB.SZnLnYW")
-            .roles("THEACHER").build(),
+            .roles("TEACHER").build(),
         User.withUsername("teacher2").password("{bcrypt}$2y$10$C7hKg.ULqTg8qK7udpLSCOHxHbruUz0yf8gmC9FURcvB1c8drVEfa")
-            .roles("STUDENT").build(),
+            .roles("TEACHER").build(),
         User.withUsername("student1").password("{bcrypt}$2y$10$T3jSu12fw9Gmm1p591CpbuGLfI/ECh88lCpdXUGQcjr4zcDMO1nkC")
             .roles("STUDENT").build(),
         User.withUsername("student2").password("{bcrypt}$2y$10$IM00QILoPNl3N.3X3oJhMOByxa2HNeUgV6GQ9v3Hl1OtoEsjNIZa.")
