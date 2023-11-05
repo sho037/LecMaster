@@ -28,6 +28,8 @@ public class AuthConfiguration {
             .logoutSuccessUrl("/"))
         .authorizeHttpRequests(authz -> authz
             .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).authenticated())
+        .csrf(csrf -> csrf
+            .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/*")))
         .headers(headers -> headers
             .frameOptions(frameOptions -> frameOptions
                 .sameOrigin()));
