@@ -5,6 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.ModelMap;
 
 import shok.lecmaster.model.Lecture;
@@ -48,6 +49,16 @@ public class LecMasterController {
   @GetMapping("/student")
   public String student() {
     return "student.html";
+  }
+
+  @GetMapping("/setting")
+  public String setting(@RequestParam int id, ModelMap model) {
+
+    String name = lectureMpper.getName(id);
+
+    model.addAttribute("name", name);
+
+    return "lecture.html";
   }
 
 }

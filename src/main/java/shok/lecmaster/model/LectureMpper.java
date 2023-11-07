@@ -14,4 +14,7 @@ public interface LectureMpper {
    */
   @Select("SELECT * FROM lecture;")
   ArrayList<Lecture> getLectures();
+
+  @Select("SELECT name FROM lecture WHERE id =${id}")
+  String getName(int id);
 }
