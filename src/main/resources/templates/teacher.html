@@ -8,12 +8,22 @@
 
 <body>
 
-  <h1>出席者</h1>
-  <ol>
-    <li>枚方 太郎</li>
-  </ol>
+  <h1>担当講義一覧</h1>
 
-  </script>
+  <table>
+    <thead>
+      <tr>
+        <th>講義名</th>
+        <th>担当教員</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="lecture, stat:${lectures}">
+        <td th:text="${lecture.name}"></td>
+      </tr>
+    </tbody>
+  </table>
+
 </body>
 
 </html>

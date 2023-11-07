@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>LecMaster</title>
+</head>
+
+<body>
+
+  <!-- student.htmlが表示される -->
+  <div sec:authorize="hasRole('ROLE_STUDENT')">
+    
+  </div>
+  <!-- teacher.thmlが表示される -->
+  <div sec:authorize="hasRole('ROLE_TEACHER')">
+  </div>
+
+</body>
+
+</html>
