@@ -1,5 +1,4 @@
-/* userやgroupといった名前はSQLでは予約語で使えないため，userNameとしていることに注意 */
-CREATE TABLE student (
+CREATE TABLE attend (
     id IDENTITY,
     name VARCHAR
 );

@@ -1,1 +1,1 @@
-INSERT INTO student (name) VALUES ('田中');
+INSERT INTO student (name) VALUES ('田中 太郎');
