@@ -9,9 +9,13 @@
 <body>
 
   <!-- student.htmlが表示される -->
-  <main th:replace="student.html"></main>
+  <tbody sec:authorize="hasRole('ROLE_STUDENT')">
+    <main th:replace="student.html"></main>
+  </tbody>
   <!-- teacher.thmlが表示される -->
-  <main th:replace="teacher.html"></main>
+  <tbody sec:authorize="hasRole('ROLE_TEACHER')">
+    <main th:replace="teacher.html"></main>
+  </tbody>
 
 
 
