@@ -3,7 +3,7 @@ CREATE TABLE attend (
     name VARCHAR
 );
 
-CREATE TABLE lectuer (
+CREATE TABLE lecture (
   id IDENTITY,
   name VARCHAR
 );
