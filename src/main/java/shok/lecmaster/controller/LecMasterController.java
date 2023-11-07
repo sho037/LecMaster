@@ -17,6 +17,19 @@ public class LecMasterController {
   @Autowired
   LectureMpper lectureMpper;
 
+  @GetMapping("/")
+  public String index(@AuthenticationPrincipal UserDetails user) {
+    if (user == null) {
+      return "redirect:/login";
+    } else if (user.getAuthorities().toString().equals("[ROLE_STUDENT]")) {
+      return "redirect:/student";
+    } else if (user.getAuthorities().toString().equals("[ROLE_TEACHER]")) {
+      return "redirect:/teacher";
+    }
+
+    return "index.html";
+  }
+
   @GetMapping("/teacher")
   public String teacher(@AuthenticationPrincipal UserDetails user, ModelMap model) {
     ArrayList<Lecture> lectures = lectureMpper.getLectures();
