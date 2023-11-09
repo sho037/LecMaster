@@ -58,7 +58,7 @@ public class LecMasterController {
 
     model.addAttribute("name", name);
 
-    return "lecture.html";
+    return "setting.html";
   }
 
 }

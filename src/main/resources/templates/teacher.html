@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       <tr th:each="lecture, stat:${lectures}">
-        <td>[[${lecture.id}]]<a th:href="@{/setting(id=${lecture.id})}">[[${lecture.name}]]</a></td>
+        <td><a th:href="@{/setting(id=${lecture.id})}">[[${lecture.name}]]</a></td>
       </tr>
     </tbody>
   </table>
