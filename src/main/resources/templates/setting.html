@@ -20,6 +20,15 @@
       <input type="submit" value="変更">
     </form>
   </div>
+
+  <div class="message">
+    <h3>生徒へのメッセージ</h3>
+
+    <form method="post" th:action="@{/message(id=${id})}">
+      <input type="text" name="message">
+      <input type="submit" value="送信">
+    </form>
+  </div>
 </body>
 
 </html>

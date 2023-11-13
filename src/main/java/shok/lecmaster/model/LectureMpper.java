@@ -36,4 +36,13 @@ public interface LectureMpper {
    */
   @Update("UPDATE lecture SET password = #{password} WHERE id = #{id}")
   void setPassword(@Param("id") int id, @Param("password") String password);
+
+  /**
+   * 生徒へのメッセージを登録する
+   *
+   * @param id       講義ID
+   * @param message  生徒へのメッセージ
+  */
+  @Update("UPDATE lecture set message = #{message} WHERE id = #{id};")
+  void setMessage(@Param("id") int id, @Param("message") String message);
 }
