@@ -77,4 +77,14 @@ public class LecMasterController {
 
     return "redirect:/teacher";
   }
+
+  @PostMapping("/message")
+  public String sendMessage(HttpServletRequest request) {
+    int id = Integer.parseInt(request.getParameter("id"));
+    String message = request.getParameter("message");
+
+    lectureMpper.setMessage(id, message);
+
+    return "redirect:/teacher";
+  }
 }
