@@ -5,5 +5,6 @@ CREATE TABLE attend (
 
 CREATE TABLE lecture (
   id IDENTITY,
-  name VARCHAR
+  name VARCHAR,
+  password VARCHAR NOT NULL DEFAULT '合言葉'
 );

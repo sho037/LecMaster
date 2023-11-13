@@ -9,6 +9,17 @@
 <body>
   <h1>[[${name}]]の設定用ページです</h1>
 
+  <div class="password">
+    <h3>パスワード</h3>
+
+    <p>現在のパスワード</p>
+    <p>[[${password}]]</p>
+
+    <form method="post" th:action="@{/setting(id=${id})}">
+      <input type="text" name="password" value="合言葉">
+      <input type="submit" value="変更">
+    </form>
+  </div>
 </body>
 
 </html>
