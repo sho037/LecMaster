@@ -3,6 +3,7 @@ package shok.lecmaster.model;
 public class Lecture {
   int id;
   String name;
+  String password;
 
   // セッター
   public void setId(int id) {
@@ -13,6 +14,10 @@ public class Lecture {
     this.name = name;
   }
 
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
   // ゲッター
   public int getId() {
     return this.id;
@@ -20,5 +25,9 @@ public class Lecture {
 
   public String getName() {
     return this.name;
+  }
+
+  public String getPassword() {
+    return this.password;
   }
 }

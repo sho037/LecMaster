@@ -5,7 +5,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.ui.ModelMap;
 
 import shok.lecmaster.model.Lecture;
@@ -55,10 +59,22 @@ public class LecMasterController {
   public String setting(@RequestParam int id, ModelMap model) {
 
     String name = lectureMpper.getName(id);
+    String password = lectureMpper.getPassword(id);
 
+    model.addAttribute("id", id);
     model.addAttribute("name", name);
+    model.addAttribute("password", password);
 
     return "setting.html";
   }
 
+  @PostMapping("/setting")
+  public String updatePassword(HttpServletRequest request) {
+    int id = Integer.parseInt(request.getParameter("id"));
+    String password = request.getParameter("password");
+
+    lectureMpper.setPassword(id, password);
+
+    return "redirect:/teacher";
+  }
 }
