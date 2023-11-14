@@ -66,10 +66,12 @@ public class LecMasterController {
 
     String name = lectureMapper.getName(id);
     String password = lectureMapper.getPassword(id);
+    String message = lectureMapper.getMessage(id);
 
     model.addAttribute("id", id);
     model.addAttribute("name", name);
     model.addAttribute("password", password);
+    model.addAttribute("message",message);
 
     ArrayList<Attend> attends = attendMapper.getAttends(id);
     model.addAttribute("attends", attends);

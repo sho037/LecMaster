@@ -23,6 +23,7 @@
 
   <div class="message">
     <h3>生徒へのメッセージ</h3>
+    <p th:if="${message}">[[${message}]]</p>
 
     <form method="post" th:action="@{/message(id=${id})}">
       <input type="text" name="message">

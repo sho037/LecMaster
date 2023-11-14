@@ -30,6 +30,15 @@ public interface LectureMapper {
   @Select("SELECT password FROM lecture WHERE id = ${id}")
   String getPassword(int id);
 
+    /**
+   * 生徒へのメッセージを取得する
+   *
+   * @param id
+   * @return password
+   */
+  @Select("SELECT message FROM lecture WHERE id = ${id}")
+  String getMessage(int id);
+
   /**
    * パスワードを設定する
    *
