@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Insert;
 import java.util.ArrayList;
 
 @Mapper
-public interface LectureMpper {
+public interface LectureMapper {
   /**
    * 講義一覧を取得する
    *

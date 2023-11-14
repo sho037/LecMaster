@@ -13,14 +13,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ui.ModelMap;
 
 import shok.lecmaster.model.Lecture;
-import shok.lecmaster.model.LectureMpper;
+import shok.lecmaster.model.LectureMapper;
+
+import shok.lecmaster.model.Attend;
+import shok.lecmaster.model.AttendMapper;
 
 import java.util.ArrayList;
 
 @Controller
 public class LecMasterController {
   @Autowired
-  LectureMpper lectureMpper;
+  LectureMapper lectureMapper;
+
+  @Autowired
+  AttendMapper attendMapper;
 
   @GetMapping("/")
   public String index(@AuthenticationPrincipal UserDetails user) {
@@ -37,7 +43,7 @@ public class LecMasterController {
 
   @GetMapping("/teacher")
   public String teacher(@AuthenticationPrincipal UserDetails user, ModelMap model) {
-    ArrayList<Lecture> lectures = lectureMpper.getLectures();
+    ArrayList<Lecture> lectures = lectureMapper.getLectures();
 
     if (user == null) {
       return "redirect:/login";
@@ -58,12 +64,15 @@ public class LecMasterController {
   @GetMapping("/setting")
   public String setting(@RequestParam int id, ModelMap model) {
 
-    String name = lectureMpper.getName(id);
-    String password = lectureMpper.getPassword(id);
+    String name = lectureMapper.getName(id);
+    String password = lectureMapper.getPassword(id);
 
     model.addAttribute("id", id);
     model.addAttribute("name", name);
     model.addAttribute("password", password);
+
+    ArrayList<Attend> attends = attendMapper.getAttends(id);
+    model.addAttribute("attends", attends);
 
     return "setting.html";
   }
@@ -73,7 +82,7 @@ public class LecMasterController {
     int id = Integer.parseInt(request.getParameter("id"));
     String password = request.getParameter("password");
 
-    lectureMpper.setPassword(id, password);
+    lectureMapper.setPassword(id, password);
 
     return "redirect:/teacher";
   }
@@ -83,7 +92,7 @@ public class LecMasterController {
     int id = Integer.parseInt(request.getParameter("id"));
     String message = request.getParameter("message");
 
-    lectureMpper.setMessage(id, message);
+    lectureMapper.setMessage(id, message);
 
     return "redirect:/teacher";
   }
@@ -94,8 +103,9 @@ public class LecMasterController {
     String question = request.getParameter("question");
     String answer = request.getParameter("answer");
 
-    lectureMpper.setQuestion(lecture_id, question, answer);
+    lectureMapper.setQuestion(lecture_id, question, answer);
 
     return "redirect:/teacher";
   }
+
 }
