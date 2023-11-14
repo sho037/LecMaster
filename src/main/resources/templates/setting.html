@@ -33,6 +33,10 @@
 
   <div class="question">
     <h3>生徒への問題</h3>
+    <tr th:each="question, stat:${questions}">
+      <td>問題：[[${question.question}]]</td>
+      <td>答え：[[${question.answer}]]</td>
+    </tr>
     <form method="post" th:action="@{/question(id=${id})}">
 
       問題

@@ -57,14 +57,5 @@ public interface LectureMapper {
   @Update("UPDATE lecture set message = #{message} WHERE id = #{id};")
   void setMessage(@Param("id") int id, @Param("message") String message);
 
-  /**
-   * 生徒への問題を登録する
-   *
-   * @param lecture_id 講義ID
-   * @param question   生徒への問題
-   */
 
-  @Insert("INSERT INTO question (lecture_id,question,answer) VALUES (#{lecture_id},#{question},#{answer});")
-  void setQuestion(@Param("lecture_id") int lectuer_id, @Param("question") String question,
-      @Param("answer") String answer);
 }

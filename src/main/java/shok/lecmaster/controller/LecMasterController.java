@@ -14,7 +14,8 @@ import org.springframework.ui.ModelMap;
 
 import shok.lecmaster.model.Lecture;
 import shok.lecmaster.model.LectureMapper;
-
+import shok.lecmaster.model.Question;
+import shok.lecmaster.model.QuestionMapper;
 import shok.lecmaster.model.Attend;
 import shok.lecmaster.model.AttendMapper;
 
@@ -27,6 +28,9 @@ public class LecMasterController {
 
   @Autowired
   AttendMapper attendMapper;
+
+  @Autowired
+  QuestionMapper questionMapper;
 
   @GetMapping("/")
   public String index(@AuthenticationPrincipal UserDetails user) {
@@ -71,10 +75,12 @@ public class LecMasterController {
     model.addAttribute("id", id);
     model.addAttribute("name", name);
     model.addAttribute("password", password);
-    model.addAttribute("message",message);
+    model.addAttribute("message", message);
 
     ArrayList<Attend> attends = attendMapper.getAttends(id);
     model.addAttribute("attends", attends);
+    ArrayList<Question> questions = questionMapper.getQuestions(id);
+    model.addAttribute("questions", questions);
 
     return "setting.html";
   }
@@ -105,7 +111,7 @@ public class LecMasterController {
     String question = request.getParameter("question");
     String answer = request.getParameter("answer");
 
-    lectureMapper.setQuestion(lecture_id, question, answer);
+    questionMapper.setQuestion(lecture_id, question, answer);
 
     return "redirect:/teacher";
   }
