@@ -71,7 +71,7 @@ public class LecMasterController {
     model.addAttribute("id", id);
     model.addAttribute("name", name);
     model.addAttribute("password", password);
-    model.addAttribute("message",message);
+    model.addAttribute("message", message);
 
     ArrayList<Attend> attends = attendMapper.getAttends(id);
     model.addAttribute("attends", attends);
