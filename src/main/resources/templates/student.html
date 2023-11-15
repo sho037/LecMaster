@@ -13,6 +13,19 @@
   <!--  生徒の講義の一覧を表示する-->
   <h3>講義一覧</h3>
 
+<table>
+  <thead>
+    <tr>
+      <th>講義名</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="lecture, stat:${lectures}">
+      <td>[[${lecture.name}]]</td>
+    </tr>
+  </tbody>
+</table>
+
   <!--  生徒の未提出課題の一覧を表示する-->
   <h3>未提出課題</h3>
 

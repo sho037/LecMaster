@@ -61,7 +61,18 @@ public class LecMasterController {
   }
 
   @GetMapping("/student")
-  public String student() {
+  public String student(@AuthenticationPrincipal UserDetails user, ModelMap model) {
+
+    ArrayList<Lecture> lectures = lectureMapper.getLectures();
+
+    if (user == null) {
+      return "redirect:/login";
+    } else if (user.getAuthorities().toString().equals("[ROLE_TEACHER]")) {
+      return "redirect:/teacher";
+    }
+
+    model.addAttribute("lectures", lectures);
+
     return "student.html";
   }
 
