@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.security.Principal;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
 import shok.lecmaster.model.Lecture;
@@ -127,4 +129,43 @@ public class LecMasterController {
     return "redirect:/teacher";
   }
 
+  @GetMapping("/attend")
+  public String attend(@RequestParam int id, ModelMap model) {
+    String name = lectureMapper.getName(id);
+
+    model.addAttribute("id", id);
+    model.addAttribute("name", name);
+
+    return "attend.html";
+  }
+
+  @PostMapping("/attend")
+  public String attend(HttpServletRequest request, Model model, Principal prin) {
+    int id = Integer.parseInt(request.getParameter("id"));
+    String pass = request.getParameter("password");
+    String password = lectureMapper.getPassword(id);
+
+    if (pass.equals(password)) {
+      Attend attend = new Attend();
+      attend.setLecture_id(id);
+      attend.setName(prin.getName());
+      attendMapper.addAttend(attend);
+      return "redirect:/student";
+    } else {
+      model.addAttribute("incorrect", id);
+      return "redirect:/reattend" + "?id=" + id;
+    }
+
+  }
+
+  @GetMapping("/reattend")
+  public String reattend(@RequestParam int id, ModelMap model) {
+    String name = lectureMapper.getName(id);
+
+    model.addAttribute("id", id);
+    model.addAttribute("name", name);
+    model.addAttribute("incorrect", 1);
+
+    return "attend.html";
+  }
 }
