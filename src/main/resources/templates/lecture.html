@@ -12,6 +12,9 @@
 
   <h2>先生からのメッセージ : [[${message}]]</h2>
 
+  <div th:each="question : ${questions}">
+    <h2>問題 : [[${question.question}]]</h2>
+  </div>
 </body>
 
 </html>
