@@ -14,6 +14,13 @@
 
   <div th:each="question : ${questions}">
     <h2>問題 : [[${question.question}]]</h2>
+
+    <form method="post" th:action="@{/reply}">
+      <input type="hidden" name="id" th:value="${question.id}">
+      <input type="hidden" name="question_id" th:value="${question.id}">
+      <input type="text" name="reply">
+      <input type="submit" value="送信">
+    </form>
   </div>
 </body>
 

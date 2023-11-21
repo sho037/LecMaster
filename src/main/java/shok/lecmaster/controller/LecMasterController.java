@@ -20,6 +20,8 @@ import shok.lecmaster.model.Question;
 import shok.lecmaster.model.QuestionMapper;
 import shok.lecmaster.model.Attend;
 import shok.lecmaster.model.AttendMapper;
+import shok.lecmaster.model.Reply;
+import shok.lecmaster.model.ReplyMapper;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,9 @@ public class LecMasterController {
 
   @Autowired
   QuestionMapper questionMapper;
+
+  @Autowired
+  ReplyMapper replyMapper;
 
   @GetMapping("/")
   public String index(@AuthenticationPrincipal UserDetails user) {
@@ -191,5 +196,29 @@ public class LecMasterController {
     model.addAttribute("questions", questions);
 
     return "lecture.html";
+  }
+
+  /**
+   * 問題に対する回答を登録する
+   */
+  @PostMapping("/reply")
+  public String reply(HttpServletRequest request, Model model, Principal prin) {
+    int id = Integer.parseInt(request.getParameter("id"));
+    String reply = request.getParameter("reply");
+    String name = prin.getName();
+    int question_id = Integer.parseInt(request.getParameter("question_id"));
+
+    Reply replyObj = new Reply();
+    replyObj.setName(name);
+    replyObj.setQuestion_id(question_id);
+    replyObj.setReply(reply);
+
+    /* 同じ学生が挿入されないようになっているので例外処理 */
+    try {
+      replyMapper.setReply(replyObj);
+    } catch (Exception e) {
+    }
+
+    return "redirect:/lecture" + "?id=" + id;
   }
 }
