@@ -8,7 +8,7 @@ public class Attend {
   // セッター
   public void setId(int id) {
     this.id = id;
-  }
+  } 
 
   public void setLecture_id(int lecture_id) {
     this.lecture_id = lecture_id;
