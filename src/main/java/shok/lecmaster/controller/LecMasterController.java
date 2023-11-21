@@ -149,7 +149,12 @@ public class LecMasterController {
       Attend attend = new Attend();
       attend.setLecture_id(id);
       attend.setName(prin.getName());
-      attendMapper.addAttend(attend);
+      try {
+        /* 同じ名前が挿入されないようにする */
+        attendMapper.addAttend(attend);
+      } catch (Exception e) {
+
+      }
       return "redirect:/student";
     } else {
       model.addAttribute("incorrect", id);

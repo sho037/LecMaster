@@ -8,7 +8,7 @@ CREATE TABLE lecture (
 CREATE TABLE attend (
     id IDENTITY,
     lecture_id INT,
-    name VARCHAR,
+    name VARCHAR unique,
     FOREIGN KEY (lecture_id) REFERENCES lecture(id)
 );
 
