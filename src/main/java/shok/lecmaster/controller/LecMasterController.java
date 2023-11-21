@@ -155,7 +155,7 @@ public class LecMasterController {
       } catch (Exception e) {
 
       }
-      return "redirect:/student";
+      return "redirect:/lecture" + "?id=" + id;
     } else {
       model.addAttribute("incorrect", id);
       return "redirect:/reattend" + "?id=" + id;
@@ -172,5 +172,18 @@ public class LecMasterController {
     model.addAttribute("incorrect", 1);
 
     return "attend.html";
+  }
+
+  /**
+   * lectureページ
+   * attendにデータが挿入されている生徒のみがアクセスできる
+   */
+  @GetMapping("/lecture")
+  public String lecture(@RequestParam int id, ModelMap model) {
+    String name = lectureMapper.getName(id);
+
+    model.addAttribute("name", name);
+
+    return "lecture.html";
   }
 }
