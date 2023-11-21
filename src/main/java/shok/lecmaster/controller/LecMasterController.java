@@ -187,6 +187,9 @@ public class LecMasterController {
     String message = lectureMapper.getMessage(id);
     model.addAttribute("message", message);
 
+    ArrayList<Question> questions = questionMapper.getQuestions(id);
+    model.addAttribute("questions", questions);
+
     return "lecture.html";
   }
 }
