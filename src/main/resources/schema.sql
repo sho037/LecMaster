@@ -19,3 +19,11 @@ CREATE TABLE question(
   answer VARCHAR,
   FOREIGN KEY (lecture_id) REFERENCES lecture(id)
 );
+
+CREATE TABLE reply(
+  id IDENTITY,
+  name VARCHAR unique,
+  question_id INT,
+  reply VARCHAR,
+  FOREIGN KEY (question_id) REFERENCES question(id)
+);
