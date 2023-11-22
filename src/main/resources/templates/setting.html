@@ -33,10 +33,25 @@
 
   <div class="question">
     <h3>生徒への問題</h3>
-    <tr th:each="question, stat:${questions}">
-      <td>問題：[[${question.question}]]</td>
-      <td>答え：[[${question.answer}]]</td>
-    </tr>
+    <table>
+      <thead>
+        <tr>
+          <th>問題番号</th>
+          <th>問題</th>
+          <th>答え</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <div th:each="question, stat:${questions}">
+          <tr>
+            <td>[[${question.id}]]</td>
+            <td>[[${question.question}]]</td>
+            <td>[[${question.answer}]]</td>
+          </tr>
+        </div>
+      </tbody>
+    </table>
     <form method="post" th:action="@{/question(id=${id})}">
 
       問題
@@ -53,6 +68,27 @@
       <td>[[${attend.name}]]</td>
     </tr>
   </div>
+
+  <h3>回答一覧</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>問題番号</th>
+        <th>名前</th>
+        <th>回答</th>
+      </tr>
+    </thead>
+    <tbody>
+      <div th:each="reply,stat:${replies}">
+        <tr>
+          <td>[[${reply.question_id}]]</td>
+          <td>[[${reply.name}]]</td>
+          <td>[[${reply.reply}]]</td>
+        </tr>
+      </div>
+    </tbody>
+  </table>
+
 </body>
 
 </html>
