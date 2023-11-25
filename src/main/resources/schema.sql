@@ -22,8 +22,10 @@ CREATE TABLE question(
 
 CREATE TABLE reply(
   id IDENTITY,
-  name VARCHAR unique,
+  name VARCHAR,
   question_id INT,
+  lecture_id INT,
   reply VARCHAR,
-  FOREIGN KEY (question_id) REFERENCES question(id)
+  FOREIGN KEY (question_id) REFERENCES question(id),
+  FOREIGN KEY (lecture_id) REFERENCES lecture(id)
 );

@@ -99,6 +99,8 @@ public class LecMasterController {
     model.addAttribute("attends", attends);
     ArrayList<Question> questions = questionMapper.getQuestions(id);
     model.addAttribute("questions", questions);
+    ArrayList<Reply> replies = replyMapper.getReply(id);
+    model.addAttribute("replies", replies);
 
     return "setting.html";
   }
@@ -212,6 +214,7 @@ public class LecMasterController {
     replyObj.setName(name);
     replyObj.setQuestion_id(question_id);
     replyObj.setReply(reply);
+    replyObj.setLecture_id(id);
 
     /* 同じ学生が挿入されないようになっているので例外処理 */
     try {
