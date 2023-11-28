@@ -7,8 +7,8 @@ CREATE TABLE lecture (
 
 CREATE TABLE eachLecture(
   id IDENTITY,
-  number INT, --授業回
   lecture_id INT,
+  number INT, --授業回
   start_date DATE,
   FOREIGN KEY (lecture_id) REFERENCES lecture(id)
 );
