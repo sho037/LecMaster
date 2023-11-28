@@ -17,10 +17,10 @@ public interface QuestionMapper {
    * @param question   生徒への問題
    */
 
-  @Insert("INSERT INTO question (lecture_id,question,answer) VALUES (#{lecture_id},#{question},#{answer});")
+  @Insert("INSERT INTO question (each_lecture_id,question,answer) VALUES (#{lecture_id},#{question},#{answer});")
   void setQuestion(@Param("lecture_id") int lectuer_id, @Param("question") String question,
       @Param("answer") String answer);
 
-  @Select("SELECT * FROM question WHERE lecture_id = ${id}")
+  @Select("SELECT * FROM question WHERE each_lecture_id = ${id}")
   ArrayList<Question> getQuestions(int id);
 }
