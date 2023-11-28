@@ -14,26 +14,26 @@ CREATE TABLE eachLecture(
 );
 
 CREATE TABLE attend (
-    id IDENTITY,
-    lecture_id INT,
-    name VARCHAR unique,
-    FOREIGN KEY (lecture_id) REFERENCES lecture(id)
+  id IDENTITY,
+  each_lecture_id INT,
+  name VARCHAR unique,
+  FOREIGN KEY (each_lecture_id) REFERENCES eachLecture(id)
 );
 
 CREATE TABLE question(
   id IDENTITY,
-  lecture_id INT,
+  each_lecture_id INT,
   question VARCHAR,
   answer VARCHAR,
-  FOREIGN KEY (lecture_id) REFERENCES lecture(id)
+  FOREIGN KEY (each_lecture_id) REFERENCES eachLecture(id)
 );
 
 CREATE TABLE reply(
   id IDENTITY,
   name VARCHAR,
   question_id INT,
-  lecture_id INT,
+  each_lecture_id INT,
   reply VARCHAR,
   FOREIGN KEY (question_id) REFERENCES question(id),
-  FOREIGN KEY (lecture_id) REFERENCES lecture(id)
+  FOREIGN KEY (each_lecture_id) REFERENCES eachLecture(id)
 );

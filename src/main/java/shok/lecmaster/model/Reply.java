@@ -3,7 +3,7 @@ package shok.lecmaster.model;
 public class Reply {
   int id;
   String name;
-  int question_id;
+  int each_question_id;
   int lecture_id;
   String reply;
 
@@ -16,8 +16,8 @@ public class Reply {
     this.name = name;
   }
 
-  public void setQuestion_id(int question_id) {
-    this.question_id = question_id;
+  public void setEach_question_id(int question_id) {
+    this.each_question_id = question_id;
   }
 
   public void setLecture_id(int lecture_id) {
@@ -37,8 +37,8 @@ public class Reply {
     return name;
   }
 
-  public int getQuestion_id() {
-    return question_id;
+  public int getEach_question_id() {
+    return each_question_id;
   }
 
   public int getLecture_id() {
