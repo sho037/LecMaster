@@ -12,16 +12,13 @@ public class EachLecture {
   public void setId(int id) {
     this.id = id;
   }
-
   public void setNumber(int number) {
     this.number = number;
   }
-
-  public void setLecture_id(int lecture_id) {
+  public void setLectureId(int lecture_id) {
     this.lecture_id = lecture_id;
   }
-
-  public void setStart_date(Date start_date) {
+  public void setStartDate(Date start_date) {
     this.start_date = start_date;
   }
 
@@ -29,16 +26,13 @@ public class EachLecture {
   public int getId() {
     return id;
   }
-
   public int getNumber() {
     return number;
   }
-
-  public int getLecture_id() {
+  public int getLectureId() {
     return lecture_id;
   }
-
-  public Date getStart_date() {
+  public Date getStartDate() {
     return start_date;
   }
 

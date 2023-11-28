@@ -154,7 +154,7 @@ public class LecMasterController {
 
     if (pass.equals(password)) {
       Attend attend = new Attend();
-      attend.setEach_lecture_id(id);
+      attend.setEachLectureId(id);
       attend.setName(prin.getName());
       try {
         /* 同じ名前が挿入されないようにする */
@@ -212,9 +212,9 @@ public class LecMasterController {
 
     Reply replyObj = new Reply();
     replyObj.setName(name);
-    replyObj.setEach_question_id(question_id);
+    replyObj.setEachQuestionId(question_id);
     replyObj.setReply(reply);
-    replyObj.setLecture_id(id);
+    replyObj.setLectureId(id);
 
     /* 同じ学生が挿入されないようになっているので例外処理 */
     try {
