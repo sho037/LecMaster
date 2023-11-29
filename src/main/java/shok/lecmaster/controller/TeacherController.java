@@ -86,4 +86,9 @@ public class TeacherController {
 
     return "redirect:/teacher";
   }
+
+  @GetMapping("/add_lecture")
+  public String addLecture() {
+    return "add_lecture.html";
+  }
 }
