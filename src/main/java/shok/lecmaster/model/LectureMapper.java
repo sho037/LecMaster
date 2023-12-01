@@ -30,7 +30,28 @@ public interface LectureMapper {
   @Select("SELECT password FROM lecture WHERE id = ${id}")
   String getPassword(int id);
 
-    /**
+  /**
+   * 講義を設定する
+   *
+   * @param name
+   * @param password
+   * @param message
+   */
+
+  @Insert("INSERT INTO lecture (name) VALUES (#{name});")
+  void setLecture(@Param("name") String name);
+
+  /**
+   * 講義IDを取得する
+   * 
+   * @param id
+   * @return
+   */
+
+  @Select("SELECT id FROM lecture WHERE name = #{name};")
+  String getLectureId(@Param("name") String name);
+
+  /**
    * 生徒へのメッセージを取得する
    *
    * @param id
@@ -56,6 +77,5 @@ public interface LectureMapper {
    */
   @Update("UPDATE lecture set message = #{message} WHERE id = #{id};")
   void setMessage(@Param("id") int id, @Param("message") String message);
-
 
 }

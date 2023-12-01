@@ -4,6 +4,34 @@
 <head>
   <meta charset="utf-8">
   <title>LecMaster</title>
+  <!--日付を選択できるようにするための設定-->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+  <script>
+    $(function () {
+      $("input[name='lecture_start_date']").datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (dateText, inst) {
+          this.value = dateText;
+        }
+      });
+    });
+    // 入力チェック
+    function validateForm() {
+      var lectureName = document.getElementsByName("lecture_name")[0].value;
+      var lectureStartDate = document.getElementsByName("lecture_start_date")[0].value;
+      var lectureStartTime = document.getElementsByName("lecture_start_time")[0].value;
+      var lectureTimes = document.getElementsByName("lecture_times")[0].value;
+
+      if (lectureName === "" || lectureStartDate === "" || lectureStartTime === "" || lectureTimes === "") {
+        alert("全ての項目を入力してください");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 </head>
 
 <body>
@@ -11,6 +39,22 @@
   <div th:replace="header"></div>
 
   <h1>講義追加ページ</h1>
+  <form method="post" th:action="@{/setting(id=${id})}" onsubmit="return validateForm()">
+    <ul>
+      <li>講義名</li>
+      <input type="text" name="lecture_name">
+
+      <li>授業開始日</li>
+      <input type="text" name="lecture_start_date" readonly>
+
+      <li>授業開始時間</li>
+      <input type="time" name="lecture_start_time">
+
+      <li>授業回数</li>
+      <input type="text" name="lecture_times" pattern="[1-9]?[0-9]" title="数字のみ入力してください" required>
+    </ul>
+    <input type="submit" value="追加">
+  </form>
 
   <div th:replace="footer"></div>
 
