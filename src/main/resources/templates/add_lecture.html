@@ -39,7 +39,7 @@
   <div th:replace="header"></div>
 
   <h1>講義追加ページ</h1>
-  <form method="post" th:action="@{/setting(id=${id})}" onsubmit="return validateForm()">
+  <form method="post" th:action="@{/add_lecture}" onsubmit="return validateForm()">
     <ul>
       <li>講義名</li>
       <input type="text" name="lecture_name">
@@ -52,6 +52,9 @@
 
       <li>授業回数</li>
       <input type="text" name="lecture_times" pattern="[1-9]?[0-9]" title="数字のみ入力してください" required>
+
+      <li>合言葉</li>
+      <input type="text" name="lecture_password">
     </ul>
     <input type="submit" value="追加">
   </form>

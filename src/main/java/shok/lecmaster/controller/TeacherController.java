@@ -1,5 +1,8 @@
 package shok.lecmaster.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import shok.lecmaster.model.Lecture;
 import shok.lecmaster.model.LectureMapper;
 import shok.lecmaster.model.QuestionMapper;
+import shok.lecmaster.model.EachLecture;
+import shok.lecmaster.model.EachLectureMapper;
 
 @Controller
 public class TeacherController {
@@ -24,6 +29,9 @@ public class TeacherController {
 
   @Autowired
   QuestionMapper questionMapper;
+
+  @Autowired
+  EachLectureMapper eachLectureMapper;
 
   @GetMapping("/teacher")
   public String teacher(@AuthenticationPrincipal UserDetails user, ModelMap model) {
@@ -57,20 +65,13 @@ public class TeacherController {
 
   @PostMapping("/setting")
   public String updatePassword(HttpServletRequest request) {
-    String idString = request.getParameter("id");
-    // idがnullの場合は新規作成
-    if (idString == null || idString.isEmpty()) {
-      lectureMapper.setLecture(request.getParameter("lecture_name"));
-      idString = lectureMapper.getLectureId(request.getParameter("lecture_name"));
-      return "redirect:/setting?id=" + idString;
-    }
-    int id = Integer.parseInt(idString);
+    int id = Integer.parseInt(request.getParameter("id"));
 
     String password = request.getParameter("password");
 
     lectureMapper.setPassword(id, password);
 
-    return "redirect:/setting";
+    return "redirect:/setting?id=" + id;
   }
 
   @PostMapping("/message")
@@ -97,5 +98,39 @@ public class TeacherController {
   @GetMapping("/add_lecture")
   public String addLecture() {
     return "add_lecture.html";
+  }
+
+  @PostMapping("/add_lecture")
+  public String addLecture(HttpServletRequest request) {
+    String name = request.getParameter("lecture_name");
+    String password = request.getParameter("lecture_password");
+    // 日付と時間のパラメータを取得
+    String startDateStr = request.getParameter("lecture_start_date");
+    String startTimeStr = request.getParameter("lecture_start_time");
+
+    // LocalDateTimeのフォーマットを定義
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    // 日付と時間の文字列を結合し、LocalDateTimeに変換
+    LocalDateTime startDateTime = LocalDateTime.parse(startDateStr + " " + startTimeStr, formatter);
+
+    // LocalDateTimeをjava.sql.Timestampに変換
+    Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
+    int lecture_times = Integer.parseInt(request.getParameter("lecture_times"));
+
+    int lecture_id = lectureMapper.addLecture(name, password);
+
+    for (int i = 0; i < lecture_times; i++) {
+      EachLecture eachLecture = new EachLecture();
+      eachLecture.setLectureId(lecture_id);
+      eachLecture.setNumber(i + 1);
+      eachLecture.setStartDate(startTimestamp);
+      eachLectureMapper.addEachLecture(eachLecture);
+
+      // 次の講義の開始時間を計算(１週間後)
+      startTimestamp = Timestamp.valueOf(startDateTime.plusWeeks(1));
+    }
+
+    return "redirect:/teacher";
   }
 }

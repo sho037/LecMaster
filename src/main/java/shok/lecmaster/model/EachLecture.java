@@ -1,12 +1,12 @@
 package shok.lecmaster.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class EachLecture {
   int id;
   int number;
   int lecture_id;
-  Date start_date;
+  Timestamp start_date;
 
   // セッター
   public void setId(int id) {
@@ -18,7 +18,7 @@ public class EachLecture {
   public void setLectureId(int lecture_id) {
     this.lecture_id = lecture_id;
   }
-  public void setStartDate(Date start_date) {
+  public void setStartDate(Timestamp start_date) {
     this.start_date = start_date;
   }
 
@@ -32,7 +32,7 @@ public class EachLecture {
   public int getLectureId() {
     return lecture_id;
   }
-  public Date getStartDate() {
+  public Timestamp getStartDate() {
     return start_date;
   }
 
