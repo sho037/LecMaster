@@ -25,7 +25,6 @@ public class TeacherController {
   @Autowired
   QuestionMapper questionMapper;
 
-
   @GetMapping("/teacher")
   public String teacher(@AuthenticationPrincipal UserDetails user, ModelMap model) {
     ArrayList<Lecture> lectures = lectureMapper.getLectures();
@@ -41,7 +40,7 @@ public class TeacherController {
     return "teacher.html";
   }
 
-    @GetMapping("/setting")
+  @GetMapping("/setting")
   public String setting(@RequestParam int id, ModelMap model) {
 
     String name = lectureMapper.getName(id);
@@ -58,12 +57,20 @@ public class TeacherController {
 
   @PostMapping("/setting")
   public String updatePassword(HttpServletRequest request) {
-    int id = Integer.parseInt(request.getParameter("id"));
+    String idString = request.getParameter("id");
+    // idがnullの場合は新規作成
+    if (idString == null || idString.isEmpty()) {
+      lectureMapper.setLecture(request.getParameter("lecture_name"));
+      idString = lectureMapper.getLectureId(request.getParameter("lecture_name"));
+      return "redirect:/setting?id=" + idString;
+    }
+    int id = Integer.parseInt(idString);
+
     String password = request.getParameter("password");
 
     lectureMapper.setPassword(id, password);
 
-    return "redirect:/teacher";
+    return "redirect:/setting";
   }
 
   @PostMapping("/message")
