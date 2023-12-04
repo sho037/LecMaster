@@ -35,15 +35,14 @@ public interface LectureMapper {
    *
    * @param name
    * @param password
-   * @param message
+   * @return 講義ID
    */
-
-  @Insert("INSERT INTO lecture (name) VALUES (#{name});")
-  void setLecture(@Param("name") String name);
+  @Insert("INSERT INTO lecture (name, password) VALUES (#{name}, #{password});")
+  int addLecture(@Param("name") String name, @Param("password") String password);
 
   /**
    * 講義IDを取得する
-   * 
+   *
    * @param id
    * @return
    */

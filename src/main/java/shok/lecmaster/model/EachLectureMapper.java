@@ -8,5 +8,12 @@ import java.util.ArrayList;
 
 @Mapper
 public interface EachLectureMapper {
-
+  /**
+   * それぞれの講義を追加する
+   *
+   * @param eachLecture
+   * @return
+   */
+  @Insert("INSERT INTO eachLecture (number, lecture_id, start_date) VALUES (#{number}, #{lecture_id}, #{start_date});")
+  void addEachLecture(EachLecture eachLecture);
 }
