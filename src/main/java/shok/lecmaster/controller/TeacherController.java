@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -98,7 +101,12 @@ public class TeacherController {
   }
 
   @GetMapping("add_lecture")
-  public String addLecture() {
+  public String addLecture(@RequestParam(required = false) String error, ModelMap model) {
+
+    if (error != null) {
+      model.addAttribute("error", error);
+    }
+
     return "add_lecture.html";
   }
 
@@ -120,7 +128,17 @@ public class TeacherController {
     Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
     int lecture_times = Integer.parseInt(request.getParameter("lecture_times"));
 
-    lectureMapper.addLecture(name, password);
+
+    try {
+      lectureMapper.addLecture(name, password);
+    } catch (Exception e) {
+      try{
+      String errorMessage = "講義名が重複しています";
+      String encodedErrorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
+      return "redirect:/teacher/add_lecture?error=" + encodedErrorMessage;
+    } catch (Exception er) {
+    }
+    }
 
     int lecture_id = Integer.parseInt(lectureMapper.getLectureId(name));
 
