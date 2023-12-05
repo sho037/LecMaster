@@ -39,6 +39,9 @@
   <div th:replace="header"></div>
 
   <h1>講義追加ページ</h1>
+  <div th:if="${error}">
+    <p>[[${error}]]</p>
+  </div>
   <form method="post" th:action="@{/teacher/add_lecture}" onsubmit="return validateForm()">
     <ul>
       <li>講義名</li>
