@@ -21,7 +21,7 @@
     </thead>
     <tbody>
       <tr th:each="lecture, stat:${lectures}">
-        <td><a th:href="@{/attend(id=${lecture.id})}">[[${lecture.name}]]</a></td>
+        <td><a th:href="@{/student/attend(id=${lecture.id})}">[[${lecture.name}]]</a></td>
       </tr>
     </tbody>
   </table>

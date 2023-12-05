@@ -39,7 +39,7 @@
   <div th:replace="header"></div>
 
   <h1>講義追加ページ</h1>
-  <form method="post" th:action="@{/add_lecture}" onsubmit="return validateForm()">
+  <form method="post" th:action="@{/teacher/add_lecture}" onsubmit="return validateForm()">
     <ul>
       <li>講義名</li>
       <input type="text" name="lecture_name">

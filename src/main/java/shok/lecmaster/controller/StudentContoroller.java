@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import shok.lecmaster.model.Attend;
@@ -24,6 +25,7 @@ import shok.lecmaster.model.Reply;
 import shok.lecmaster.model.ReplyMapper;
 
 @Controller
+@RequestMapping("/student")
 public class StudentContoroller {
 
   @Autowired
@@ -38,7 +40,7 @@ public class StudentContoroller {
   @Autowired
   ReplyMapper replyMapper;
 
-  @GetMapping("/student")
+  @GetMapping
   public String student(@AuthenticationPrincipal UserDetails user, ModelMap model) {
 
     ArrayList<Lecture> lectures = lectureMapper.getLectures();
@@ -53,31 +55,31 @@ public class StudentContoroller {
     return "student.html";
   }
 
-  @PostMapping("/attend")
+  @PostMapping("attend")
   public String attend(HttpServletRequest request, Model model, Principal prin) {
-      int id = Integer.parseInt(request.getParameter("id"));
-      String pass = request.getParameter("password");
-      String password = lectureMapper.getPassword(id);
+    int id = Integer.parseInt(request.getParameter("id"));
+    String pass = request.getParameter("password");
+    String password = lectureMapper.getPassword(id);
 
-      if (pass.equals(password)) {
-        Attend attend = new Attend();
-        attend.setEachLectureId(id);
-        attend.setName(prin.getName());
-        try {
-          /* 同じ名前が挿入されないようにする */
-          attendMapper.addAttend(attend);
-        } catch (Exception e) {
+    if (pass.equals(password)) {
+      Attend attend = new Attend();
+      attend.setEachLectureId(id);
+      attend.setName(prin.getName());
+      try {
+        /* 同じ名前が挿入されないようにする */
+        attendMapper.addAttend(attend);
+      } catch (Exception e) {
 
-        }
-        return "redirect:/lecture" + "?id=" + id;
-      } else {
-        model.addAttribute("incorrect", id);
-        return "redirect:/reattend" + "?id=" + id;
       }
-
+      return "redirect:/student/lecture" + "?id=" + id;
+    } else {
+      model.addAttribute("incorrect", id);
+      return "redirect:/student/reattend" + "?id=" + id;
     }
 
-  @GetMapping("/attend")
+  }
+
+  @GetMapping("attend")
   public String attend(@RequestParam int id, ModelMap model) {
     String name = lectureMapper.getName(id);
 
@@ -87,7 +89,7 @@ public class StudentContoroller {
     return "attend.html";
   }
 
-  @GetMapping("/reattend")
+  @GetMapping("reattend")
   public String reattend(@RequestParam int id, ModelMap model) {
     String name = lectureMapper.getName(id);
 
@@ -98,11 +100,11 @@ public class StudentContoroller {
     return "attend.html";
   }
 
-    /**
+  /**
    * lectureページ
    * attendにデータが挿入されている生徒のみがアクセスできる
    */
-  @GetMapping("/lecture")
+  @GetMapping("lecture")
   public String lecture(@RequestParam int id, ModelMap model) {
     String name = lectureMapper.getName(id);
 
@@ -120,7 +122,7 @@ public class StudentContoroller {
   /**
    * 問題に対する回答を登録する
    */
-  @PostMapping("/reply")
+  @PostMapping("reply")
   public String reply(HttpServletRequest request, Model model, Principal prin) {
     int id = Integer.parseInt(request.getParameter("id"));
     String reply = request.getParameter("reply");
@@ -139,6 +141,6 @@ public class StudentContoroller {
     } catch (Exception e) {
     }
 
-    return "redirect:/lecture" + "?id=" + id;
+    return "redirect:/student/lecture" + "?id=" + id;
   }
 }

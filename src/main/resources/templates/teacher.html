@@ -12,7 +12,7 @@
 
 
   <h1>担当講義一覧</h1>
-  <a href="/add_lecture">講義を追加</a>
+  <a href="/teacher/add_lecture">講義を追加</a>
 
   <table>
     <thead>
@@ -23,7 +23,7 @@
     </thead>
     <tbody>
       <tr th:each="lecture, stat:${lectures}">
-        <td><a th:href="@{/setting(id=${lecture.id})}">[[${lecture.name}]]</a></td>
+        <td><a th:href="@{/teacher/setting(id=${lecture.id})}">[[${lecture.name}]]</a></td>
       </tr>
     </tbody>
   </table>
