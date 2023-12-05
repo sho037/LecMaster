@@ -46,7 +46,6 @@ public interface LectureMapper {
    * @param id
    * @return
    */
-
   @Select("SELECT id FROM lecture WHERE name = #{name};")
   String getLectureId(@Param("name") String name);
 

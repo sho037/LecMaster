@@ -120,7 +120,9 @@ public class TeacherController {
     Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
     int lecture_times = Integer.parseInt(request.getParameter("lecture_times"));
 
-    int lecture_id = lectureMapper.addLecture(name, password);
+    lectureMapper.addLecture(name, password);
+
+    int lecture_id = Integer.parseInt(lectureMapper.getLectureId(name));
 
     for (int i = 0; i < lecture_times; i++) {
       EachLecture eachLecture = new EachLecture();
