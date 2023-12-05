@@ -65,6 +65,9 @@ public class TeacherController {
     model.addAttribute("password", password);
     model.addAttribute("message", message);
 
+    ArrayList<EachLecture> eachLectures = eachLectureMapper.getEachLectures(id);
+    model.addAttribute("each_lectures", eachLectures);
+
     return "setting.html";
   }
 
@@ -128,16 +131,15 @@ public class TeacherController {
     Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
     int lecture_times = Integer.parseInt(request.getParameter("lecture_times"));
 
-
     try {
       lectureMapper.addLecture(name, password);
     } catch (Exception e) {
-      try{
-      String errorMessage = "講義名が重複しています";
-      String encodedErrorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
-      return "redirect:/teacher/add_lecture?error=" + encodedErrorMessage;
-    } catch (Exception er) {
-    }
+      try {
+        String errorMessage = "講義名が重複しています";
+        String encodedErrorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
+        return "redirect:/teacher/add_lecture?error=" + encodedErrorMessage;
+      } catch (Exception er) {
+      }
     }
 
     int lecture_id = Integer.parseInt(lectureMapper.getLectureId(name));

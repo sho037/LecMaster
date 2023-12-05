@@ -34,7 +34,21 @@
     </form>
   </div>
 
-  <div th:replace="footer"></div>
+  <div class="each-lecture">
+    <h3>各講義一覧</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>講義回</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="lecture, stat:${each_lectures}">
+          <td>[[${lecture.number}]]</td>
+        </tr>
+      </tbody>
+
+      <div th:replace="footer"></div>
 </body>
 
 </html>

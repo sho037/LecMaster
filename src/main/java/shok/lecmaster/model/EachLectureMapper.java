@@ -16,4 +16,12 @@ public interface EachLectureMapper {
    */
   @Insert("INSERT INTO eachLecture (number, lecture_id, start_date) VALUES (#{number}, #{lecture_id}, #{start_date});")
   void addEachLecture(EachLecture eachLecture);
+
+  /**
+   * 特定の授業のすべて講義回を取得する
+   *
+   * @return
+   */
+  @Select("SELECT * FROM eachLecture where lecture_id=  #{id};")
+  ArrayList<EachLecture> getEachLectures(int id);
 }
