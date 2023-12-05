@@ -18,7 +18,7 @@
     <p>現在のパスワード</p>
     <p>[[${password}]]</p>
 
-    <form method="post" th:action="@{/setting(id=${id})}">
+    <form method="post" th:action="@{/teacher/setting(id=${id})}">
       <input type="text" name="password" value="合言葉">
       <input type="submit" value="変更">
     </form>
@@ -28,7 +28,7 @@
     <h3>生徒へのメッセージ</h3>
     <p th:if="${message}">[[${message}]]</p>
 
-    <form method="post" th:action="@{/message(id=${id})}">
+    <form method="post" th:action="@{/teacher/message(id=${id})}">
       <input type="text" name="message">
       <input type="submit" value="送信">
     </form>

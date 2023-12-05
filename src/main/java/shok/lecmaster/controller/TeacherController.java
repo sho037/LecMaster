@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import shok.lecmaster.model.Lecture;
@@ -22,6 +23,7 @@ import shok.lecmaster.model.EachLecture;
 import shok.lecmaster.model.EachLectureMapper;
 
 @Controller
+@RequestMapping("/teacher")
 public class TeacherController {
 
   @Autowired
@@ -33,7 +35,7 @@ public class TeacherController {
   @Autowired
   EachLectureMapper eachLectureMapper;
 
-  @GetMapping("/teacher")
+  @GetMapping
   public String teacher(@AuthenticationPrincipal UserDetails user, ModelMap model) {
     ArrayList<Lecture> lectures = lectureMapper.getLectures();
 
@@ -48,7 +50,7 @@ public class TeacherController {
     return "teacher.html";
   }
 
-  @GetMapping("/setting")
+  @GetMapping("setting")
   public String setting(@RequestParam int id, ModelMap model) {
 
     String name = lectureMapper.getName(id);
@@ -63,7 +65,7 @@ public class TeacherController {
     return "setting.html";
   }
 
-  @PostMapping("/setting")
+  @PostMapping("setting")
   public String updatePassword(HttpServletRequest request) {
     int id = Integer.parseInt(request.getParameter("id"));
 
@@ -71,10 +73,10 @@ public class TeacherController {
 
     lectureMapper.setPassword(id, password);
 
-    return "redirect:/setting?id=" + id;
+    return "redirect:/teacher/setting?id=" + id;
   }
 
-  @PostMapping("/message")
+  @PostMapping("message")
   public String sendMessage(HttpServletRequest request) {
     int id = Integer.parseInt(request.getParameter("id"));
     String message = request.getParameter("message");
@@ -84,7 +86,7 @@ public class TeacherController {
     return "redirect:/teacher";
   }
 
-  @PostMapping("/question")
+  @PostMapping("question")
   public String sendQuestion(HttpServletRequest request) {
     int lecture_id = Integer.parseInt(request.getParameter("id"));
     String question = request.getParameter("question");
@@ -95,12 +97,12 @@ public class TeacherController {
     return "redirect:/teacher";
   }
 
-  @GetMapping("/add_lecture")
+  @GetMapping("add_lecture")
   public String addLecture() {
     return "add_lecture.html";
   }
 
-  @PostMapping("/add_lecture")
+  @PostMapping("add_lecture")
   public String addLecture(HttpServletRequest request) {
     String name = request.getParameter("lecture_name");
     String password = request.getParameter("lecture_password");
