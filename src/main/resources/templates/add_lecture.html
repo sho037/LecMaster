@@ -36,7 +36,7 @@
 
 <body>
 
-  <div th:replace="header"></div>
+  <div th:replace="components/header"></div>
 
   <h1>講義追加ページ</h1>
   <div th:if="${error}">
@@ -62,6 +62,6 @@
     <input type="submit" value="追加">
   </form>
 
-  <div th:replace="footer"></div>
+  <div th:replace="components/footer"></div>
 
 </html>
