@@ -14,44 +14,61 @@
 
   <div th:replace="components/header"></div>
 
-  <h1>[[${name}]]の設定用ページです</h1>
+  <div class="container">
 
-  <div class="password">
-    <h3>パスワード</h3>
+    <!-- 空白 -->
+    <div class="mt-5"></div>
 
-    <p>現在のパスワード</p>
-    <p>[[${password}]]</p>
+    <h2>[[${name}]]の設定用ページです</h2>
 
-    <form method="post" th:action="@{/teacher/setting(id=${id})}">
-      <input type="text" name="password" value="合言葉">
-      <input type="submit" value="変更">
-    </form>
-  </div>
+    <div class="password mt-2">
+      <h3>パスワード</h3>
 
-  <div class="message">
-    <h3>生徒へのメッセージ</h3>
-    <p th:if="${message}">[[${message}]]</p>
+      <form method="post" th:action="@{/teacher/setting(id=${id})}">
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" name="password" th:placeholder="@{${password}}">
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">変更</button>
+          </div>
+        </div>
+      </form>
+    </div>
 
-    <form method="post" th:action="@{/teacher/message(id=${id})}">
-      <input type="text" name="message">
-      <input type="submit" value="送信">
-    </form>
-  </div>
+    <div class="message mt-2">
+      <h3>生徒へのメッセージ</h3>
+      <p th:if="${message}">[[${message}]]</p>
 
-  <div class="each-lecture">
-    <h3>各講義一覧</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>講義回</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="lecture, stat:${each_lectures}">
-          <td>[[${lecture.number}]]</td>
-        </tr>
-      </tbody>
-    </table>
+      <form method="post" th:action="@{/teacher/message(id=${id})}">
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" name="message" placeholder="メッセージ">
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">変更</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="each-lecture mt-2">
+      <h3>各講義一覧</h3>
+      
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>講義回</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="lecture, stat:${each_lectures}">
+            <td>[[${lecture.number}]]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <div th:replace="components/footer"></div>

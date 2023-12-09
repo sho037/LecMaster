@@ -43,30 +43,41 @@
 
   <div th:replace="components/header"></div>
 
-  <h1>講義追加ページ</h1>
-  <div th:if="${error}">
-    <p>[[${error}]]</p>
+  <div class="container w-50">
+
+    <!-- 空白 -->
+    <div class="mt-5"></div>
+
+    <h2>講義追加ページ</h2>
+
+    <div th:if="${error}">
+      <p class="alert alert-warning" role="alert">[[${error}]]</p>
+    </div>
+
+    <form method="post" th:action="@{/teacher/add_lecture}" onsubmit="return validateForm()" class="w-25 mx-auto">
+      <ul class="list-unstyled">
+        <li class="mb-3">講義名</li>
+        <input type="text" name="lecture_name" class="form-control">
+
+        <li class="mb-3">授業開始日</li>
+        <input type="text" name="lecture_start_date" readonly class="form-control">
+
+        <li class="mb-3">授業開始時間</li>
+        <input type="time" name="lecture_start_time" class="form-control">
+
+        <li class="mb-3">授業回数</li>
+        <input type="text" name="lecture_times" pattern="[1-9]?[0-9]" title="数字のみ入力してください" required
+          class="form-control">
+
+        <li class="mb-3">合言葉</li>
+        <input type="text" name="lecture_password" class="form-control">
+      </ul>
+      <input type="submit" value="追加" class="btn btn-primary">
+    </form>
+
+    <!-- 空白 -->
+    <div class="mt-5"></div>
   </div>
-
-  <form method="post" th:action="@{/teacher/add_lecture}" onsubmit="return validateForm()">
-    <ul>
-      <li>講義名</li>
-      <input type="text" name="lecture_name">
-
-      <li>授業開始日</li>
-      <input type="text" name="lecture_start_date" readonly>
-
-      <li>授業開始時間</li>
-      <input type="time" name="lecture_start_time">
-
-      <li>授業回数</li>
-      <input type="text" name="lecture_times" pattern="[1-9]?[0-9]" title="数字のみ入力してください" required>
-
-      <li>合言葉</li>
-      <input type="text" name="lecture_password">
-    </ul>
-    <input type="submit" value="追加">
-  </form>
 
   <div th:replace="components/footer"></div>
 
