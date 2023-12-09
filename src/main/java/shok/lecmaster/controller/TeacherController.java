@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import ch.qos.logback.core.model.Model;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,7 +61,6 @@ public class TeacherController {
 
   @GetMapping("setting")
   public String setting(@RequestParam int id, ModelMap model) {
-
     String name = lectureMapper.getName(id);
     String password = lectureMapper.getPassword(id);
     String message = lectureMapper.getMessage(id);
@@ -74,7 +79,6 @@ public class TeacherController {
   @PostMapping("setting")
   public String updatePassword(HttpServletRequest request) {
     int id = Integer.parseInt(request.getParameter("id"));
-
     String password = request.getParameter("password");
 
     lectureMapper.setPassword(id, password);
@@ -157,4 +161,29 @@ public class TeacherController {
 
     return "redirect:/teacher";
   }
+
+  @GetMapping("each_lecture_setting")
+  public String each_lecture_setting(@RequestParam int id, @RequestParam int number, ModelMap model) {
+
+    String name = lectureMapper.getName(id);
+
+    model.addAttribute("name", name);
+    model.addAttribute("number", number);
+    model.addAttribute("id", id);
+
+    return "each_lecture_setting.html";
+  }
+
+  @PostMapping("each_lecture_setting")
+  public ModelAndView each_lecture_setting(HttpServletRequest request, ModelMap model) {
+
+    int lecture_id = Integer.parseInt(request.getParameter("id"));
+    String question = request.getParameter("question");
+    String answer = request.getParameter("answer");
+
+    questionMapper.setQuestion(lecture_id, question, answer);
+
+    return new ModelAndView("each_lecture_setting", model);
+  }
+
 }

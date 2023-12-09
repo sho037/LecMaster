@@ -24,4 +24,16 @@ public interface EachLectureMapper {
    */
   @Select("SELECT * FROM eachLecture where lecture_id=  #{id};")
   ArrayList<EachLecture> getEachLectures(int id);
+
+  /**
+   * 特定の授業の特定の講義回を取得する
+   *
+   * @param lecture_id
+   * @return number
+   *
+   */
+
+  @Select("SELECT number FROM eachLecture where lecture_id=  #{lecture_id};")
+  int getNum(int lecture_id);
+
 }
