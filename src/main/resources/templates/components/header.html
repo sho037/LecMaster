@@ -1,9 +1,23 @@
 <header>
-  <div style="display: flex; justify-content: space-between; align-items: center;">
-    <a href="/" style="text-decoration: none; color: #000;">
-      <h2 style="margin: 0;">LecMaster</h2>
-    </a>
-    <a href="/logout"
-      style="padding: 10px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Logout</a>
-  </div>
+  <nav class="navbar" style="background-color: #f8cd88;">
+    <div class="container-fluid">
+      <span class="navbar-brand h1 container">
+        <a href="/" class="text-decoration-none text-dark">LecMaster</a>
+      </span>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <p class="nav-item text-end pt-5">こんにちは！
+            <span sec:authentication="name"></span>さん。
+          </p>
+          <a class="nav-link active text-end" href="/">ホーム</a>
+          <a class="nav-link text-end" href="/logout">ログアウト</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 </header>
