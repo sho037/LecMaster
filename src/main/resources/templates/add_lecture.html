@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LecMaster</title>
   <!--日付を選択できるようにするための設定-->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
@@ -42,6 +43,7 @@
   <div th:if="${error}">
     <p>[[${error}]]</p>
   </div>
+
   <form method="post" th:action="@{/teacher/add_lecture}" onsubmit="return validateForm()">
     <ul>
       <li>講義名</li>

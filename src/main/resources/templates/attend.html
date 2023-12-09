@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LecMaster</title>
 </head>
 
@@ -15,9 +16,13 @@
   <form method="post" th:action="@{/student/attend(id=${id})}">
     <input type="text" name="password">
     <input type="submit" value="送信">
+  </form>
+
+  <div th:if="${incorrect}">
+    <p>合言葉が違います</p>
+  </div>
+
+  <div th:replace="components/footer"></div>
 </body>
-<div th:if="${incorrect}">
-  <p>合言葉が違います</p>
-</div>
 
 </html>
