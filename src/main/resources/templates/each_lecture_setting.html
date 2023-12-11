@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>LecMaster</title>
+</head>
+
+<body>
+  <div th:replace="header"></div>
+
+  <h1>第[[${number}]]回[[${name}]][[${id}]]</h1>
+
+  <form method="post" th:action="@{/teacher/each_lecture_setting}">
+    <input type="hidden" name="id" th:value="${id}">
+    <input type="text" name="question"><br>
+    <input type="text" name="answer">
+    <input type="submit" value="送信">
+  </form>
+
+
+  <div th:replace="footer"></div>
+</body>
+
+</html>
