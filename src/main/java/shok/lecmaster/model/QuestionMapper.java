@@ -15,6 +15,7 @@ public interface QuestionMapper {
    *
    * @param lecture_id 講義ID
    * @param question   生徒への問題
+   * @param answer     生徒への問題の答え
    */
 
   @Insert("INSERT INTO question (each_lecture_id,question,answer) VALUES (#{lecture_id},#{question},#{answer});")
@@ -23,4 +24,5 @@ public interface QuestionMapper {
 
   @Select("SELECT * FROM question WHERE each_lecture_id = ${id}")
   ArrayList<Question> getQuestions(int id);
+
 }

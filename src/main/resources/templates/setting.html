@@ -54,7 +54,7 @@
 
     <div class="each-lecture mt-2">
       <h3>各講義一覧</h3>
-      
+
       <table class="table table-striped">
         <thead>
           <tr>
@@ -63,7 +63,11 @@
         </thead>
         <tbody>
           <tr th:each="lecture, stat:${each_lectures}">
-            <td>[[${lecture.number}]]</td>
+            <td>
+              <a th:href="@{/teacher/each_lecture_setting(id=${id},number=${lecture.number})}">
+                [[${lecture.number}]]
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
