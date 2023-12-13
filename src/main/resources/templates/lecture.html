@@ -30,6 +30,25 @@
 
   </div>
 
+  <h3>各講義一覧</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>講義回</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="lecture, stat:${each_lectures}">
+        <td>
+          <a href="#">
+            [[${lecture.number}]]
+          </a>
+        </td>
+      </tr>
+      </tr>
+    </tbody>
+  </table>
+
   <div th:replace="components/footer"></div>
 
   <!-- Bootstrap -->

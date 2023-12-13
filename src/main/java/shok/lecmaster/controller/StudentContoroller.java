@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import shok.lecmaster.model.Attend;
 import shok.lecmaster.model.AttendMapper;
+import shok.lecmaster.model.EachLecture;
 import shok.lecmaster.model.Lecture;
 import shok.lecmaster.model.LectureMapper;
 import shok.lecmaster.model.Question;
 import shok.lecmaster.model.QuestionMapper;
 import shok.lecmaster.model.Reply;
 import shok.lecmaster.model.ReplyMapper;
+import shok.lecmaster.model.EachLecture;
+import shok.lecmaster.model.EachLectureMapper;
 
 @Controller
 @RequestMapping("/student")
@@ -39,6 +42,9 @@ public class StudentContoroller {
 
   @Autowired
   ReplyMapper replyMapper;
+
+  @Autowired
+  EachLectureMapper eachLectureMapper;
 
   @GetMapping
   public String student(@AuthenticationPrincipal UserDetails user, ModelMap model) {
@@ -115,6 +121,9 @@ public class StudentContoroller {
 
     ArrayList<Question> questions = questionMapper.getQuestions(id);
     model.addAttribute("questions", questions);
+
+    ArrayList<EachLecture> eachLectures = eachLectureMapper.getEachLectures(id);
+    model.addAttribute("each_lectures", eachLectures);
 
     return "lecture.html";
   }
