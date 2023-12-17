@@ -1,6 +1,8 @@
 package shok.lecmaster.controller;
 
 import java.security.Principal;
+import java.time.LocalTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,13 +69,24 @@ public class StudentContoroller {
     String pass = request.getParameter("password");
     String password = lectureMapper.getPassword(id);
 
+
+
     if (pass.equals(password)) {
       Attend attend = new Attend();
       attend.setEachLectureId(id);
       attend.setName(prin.getName());
+
+      LocalTime currentTime = LocalTime.now();
+      LocalTime time1 = eachLectureMapper.getStart_time(id);
+      int start = currentTime.compareTo(time1);
+      int end = currentTime.compareTo(eachLectureMapper.getEnd_time(id));
+
       try {
         /* 同じ名前が挿入されないようにする */
-        attendMapper.addAttend(attend);
+        if(start >= 0 && end <= 0){
+          attendMapper.addAttend(attend);
+        }
+
       } catch (Exception e) {
 
       }
