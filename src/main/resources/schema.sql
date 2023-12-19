@@ -10,6 +10,8 @@ CREATE TABLE eachLecture(
   lecture_id INT,
   number INT, --授業回
   start_date DATE,
+  start_time TIME,
+  end_time TIME,
   FOREIGN KEY (lecture_id) REFERENCES lecture(id)
 );
 

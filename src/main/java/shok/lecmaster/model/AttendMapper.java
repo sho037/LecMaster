@@ -21,7 +21,7 @@ public interface AttendMapper {
    *
    * @param attend 出席者
    */
-  @Insert("INSERT INTO attend (lecture_id, name) VALUES (#{lecture_id}, #{name});")
+  @Insert("INSERT INTO attend (each_lecture_id, name) VALUES (#{each_lecture_id}, #{name});")
   @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
   void addAttend(Attend attend);
 }

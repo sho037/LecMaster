@@ -1,5 +1,6 @@
 package shok.lecmaster.model;
 
+import java.time.LocalTime;
 import java.sql.Timestamp;
 
 public class EachLecture {
@@ -7,6 +8,8 @@ public class EachLecture {
   int number;
   int lecture_id;
   Timestamp start_date;
+  LocalTime start_time;
+  LocalTime end_time;
 
   // セッター
   public void setId(int id) {
@@ -21,6 +24,12 @@ public class EachLecture {
   public void setStartDate(Timestamp start_date) {
     this.start_date = start_date;
   }
+  public void setStartTime(LocalTime start_time){
+    this.start_time = start_time;
+  }
+  public void setEndTime(LocalTime end_time){
+    this.end_time = end_time;
+  }
 
   // ゲッター
   public int getId() {
@@ -34,6 +43,12 @@ public class EachLecture {
   }
   public Timestamp getStartDate() {
     return start_date;
+  }
+  public LocalTime getStartTime(){
+    return start_time;
+  }
+  public LocalTime getEndTime(){
+    return end_time;
   }
 
 }

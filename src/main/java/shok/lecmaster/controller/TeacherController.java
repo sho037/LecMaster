@@ -1,6 +1,7 @@
 package shok.lecmaster.controller;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -127,9 +128,13 @@ public class TeacherController {
 
     // LocalDateTimeのフォーマットを定義
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    DateTimeFormatter Timeformatter = DateTimeFormatter.ofPattern("HH:mm");
 
     // 日付と時間の文字列を結合し、LocalDateTimeに変換
     LocalDateTime startDateTime = LocalDateTime.parse(startDateStr + " " + startTimeStr, formatter);
+
+    //時間の文字列をLocalTimeに変換
+    LocalTime localTime = LocalTime.parse(startTimeStr, Timeformatter);
 
     // LocalDateTimeをjava.sql.Timestampに変換
     Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
@@ -153,10 +158,12 @@ public class TeacherController {
       eachLecture.setLectureId(lecture_id);
       eachLecture.setNumber(i + 1);
       eachLecture.setStartDate(startTimestamp);
+      eachLecture.setStartTime(localTime);
+      eachLecture.setEndTime(localTime.plusMinutes(100));
       eachLectureMapper.addEachLecture(eachLecture);
 
       // 次の講義の開始時間を計算(１週間後)
-      startTimestamp = Timestamp.valueOf(startDateTime.plusWeeks(1));
+      startTimestamp = Timestamp.valueOf(startDateTime.plusWeeks(i + 1));
     }
 
     return "redirect:/teacher";

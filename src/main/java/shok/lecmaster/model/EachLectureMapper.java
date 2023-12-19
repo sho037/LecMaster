@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import java.util.ArrayList;
+import java.time.LocalTime;
+import java.sql.Timestamp;
 
 @Mapper
 public interface EachLectureMapper {
@@ -14,7 +16,7 @@ public interface EachLectureMapper {
    * @param eachLecture
    * @return
    */
-  @Insert("INSERT INTO eachLecture (number, lecture_id, start_date) VALUES (#{number}, #{lecture_id}, #{start_date});")
+  @Insert("INSERT INTO eachLecture (number, lecture_id, start_date,start_time,end_time) VALUES (#{number}, #{lecture_id}, #{start_date},#{start_time},#{end_time});")
   void addEachLecture(EachLecture eachLecture);
 
   /**
@@ -36,4 +38,24 @@ public interface EachLectureMapper {
   @Select("SELECT number FROM eachLecture where lecture_id=  #{lecture_id};")
   int getNum(int lecture_id);
 
+  /*
+   * 授業の開始時間を取得する
+   *
+   */
+     @Select("SELECT start_time FROM eachLecture where lecture_id=  #{lecture_id} AND number = 1;")
+   LocalTime getStart_time(int lecture_id);
+
+  /*
+   * 授業の終了時間を取得する
+   *
+   */
+    @Select("SELECT end_time FROM eachLecture where lecture_id=  #{lecture_id} AND number = 1;")
+   LocalTime getEnd_time(int lecture_id);
+
+   /*
+    *授業の日付を取得する
+    *
+    */
+    @Select("SELECT start_date FROM eachLecture where lecture_id = #{lecture_id}")
+    Timestamp getStart_date(int lecture_id);
 }

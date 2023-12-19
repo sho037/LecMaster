@@ -1,7 +1,12 @@
 package shok.lecmaster.controller;
 
 import java.security.Principal;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -65,24 +70,49 @@ public class StudentContoroller {
   public String attend(HttpServletRequest request, Model model, Principal prin) {
     int id = Integer.parseInt(request.getParameter("id"));
     String pass = request.getParameter("password");
-    String password = lectureMapper.getPassword(id);
+    String lec_pass = lectureMapper.getPassword(id);
 
-    if (pass.equals(password)) {
-      Attend attend = new Attend();
-      attend.setEachLectureId(id);
-      attend.setName(prin.getName());
-      try {
-        /* 同じ名前が挿入されないようにする */
-        attendMapper.addAttend(attend);
-      } catch (Exception e) {
-
-      }
-      return "redirect:/student/lecture" + "?id=" + id;
-    } else {
+    // パスワードが間違っていた場合
+    if (!pass.equals(lec_pass)) {
       model.addAttribute("incorrect", id);
-      return "redirect:/student/reattend" + "?id=" + id;
+      return "redirect:/student/reattend?id=" + id;
     }
 
+    LocalDateTime now = LocalDateTime.now();
+    Timestamp timestamp = Timestamp.valueOf(now);
+    LocalDate date = timestamp.toLocalDateTime().toLocalDate();
+
+    ArrayList<EachLecture> eachLectures = eachLectureMapper.getEachLectures(id);
+    for (EachLecture eachLecture : eachLectures) {
+      if (isAttendable(eachLecture, date, now)) {
+        registerAttendance(eachLecture.getId(), prin.getName());
+        return "redirect:/student/lecture?id=" + id;
+      }
+    }
+
+    return "redirect:/student/lecture?id=" + id;
+  }
+
+  private boolean isAttendable(EachLecture eachLecture, LocalDate date, LocalDateTime now) {
+    LocalDate lectureStartDate = eachLecture.getStartDate().toLocalDateTime().toLocalDate();
+    // 今日の授業でない場合
+    if (!date.equals(lectureStartDate)) {
+      return false;
+    }
+
+    LocalTime startTime = eachLecture.getStartTime();
+    LocalTime endTime = eachLecture.getEndTime();
+    Timestamp startTimestamp = Timestamp.valueOf(now.toLocalDate().atTime(startTime).minusMinutes(10));
+    Timestamp endTimestamp = Timestamp.valueOf(now.toLocalDate().atTime(endTime).plusMinutes(10));
+
+    return now.isAfter(startTimestamp.toLocalDateTime()) && now.isBefore(endTimestamp.toLocalDateTime());
+  }
+
+  private void registerAttendance(int lectureId, String studentName) {
+    Attend attend = new Attend();
+    attend.setEachLectureId(lectureId);
+    attend.setName(studentName);
+    attendMapper.addAttend(attend);
   }
 
   @GetMapping("attend")
