@@ -163,7 +163,7 @@ public class TeacherController {
       eachLectureMapper.addEachLecture(eachLecture);
 
       // 次の講義の開始時間を計算(１週間後)
-      startTimestamp = Timestamp.valueOf(startDateTime.plusWeeks(1));
+      startTimestamp = Timestamp.valueOf(startDateTime.plusWeeks(i + 1));
     }
 
     return "redirect:/teacher";

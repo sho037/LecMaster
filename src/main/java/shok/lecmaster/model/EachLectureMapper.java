@@ -42,7 +42,6 @@ public interface EachLectureMapper {
    * 授業の開始時間を取得する
    *
    */
-
      @Select("SELECT start_time FROM eachLecture where lecture_id=  #{lecture_id} AND number = 1;")
    LocalTime getStart_time(int lecture_id);
 
@@ -50,8 +49,13 @@ public interface EachLectureMapper {
    * 授業の終了時間を取得する
    *
    */
-
     @Select("SELECT end_time FROM eachLecture where lecture_id=  #{lecture_id} AND number = 1;")
    LocalTime getEnd_time(int lecture_id);
 
+   /*
+    *授業の日付を取得する
+    *
+    */
+    @Select("SELECT start_date FROM eachLecture where lecture_id = #{lecture_id}")
+    Timestamp getStart_date(int lecture_id);
 }
