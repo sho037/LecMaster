@@ -175,7 +175,7 @@ public class StudentContoroller {
     replyObj.setName(name);
     replyObj.setQuestion_id(question_id);
     replyObj.setReply(reply);
-    replyObj.setEach_lecture_id(each_lecture_id);
+    replyObj.setEach_lecture_id(eachLectureMapper.getId(id, 1));
 
     /* 同じ学生が挿入されないようになっているので例外処理 */
     try {

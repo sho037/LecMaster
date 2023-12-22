@@ -143,9 +143,9 @@ public class StudentContoroller {
   @GetMapping("lecture")
   public String lecture(@RequestParam int id, ModelMap model) {
     String name = lectureMapper.getName(id);
+    model.addAttribute("lecture_id", id);
 
     model.addAttribute("name", name);
-    model.addAttribute("id", id);
 
     String message = lectureMapper.getMessage(id);
     model.addAttribute("message", message);
@@ -168,14 +168,12 @@ public class StudentContoroller {
     String reply = request.getParameter("reply");
     String name = prin.getName();
     int question_id = Integer.parseInt(request.getParameter("question_id"));
-    int number = Integer.parseInt(request.getParameter("number"));
-    int each_lecture_id = eachLectureMapper.getId(id, number);
 
     Reply replyObj = new Reply();
     replyObj.setName(name);
-    replyObj.setQuestion_id(question_id);
+    replyObj.setEachQuestionId(question_id);
     replyObj.setReply(reply);
-    replyObj.setEach_lecture_id(each_lecture_id);
+    replyObj.setLectureId(id);
 
     /* 同じ学生が挿入されないようになっているので例外処理 */
     try {
@@ -186,24 +184,20 @@ public class StudentContoroller {
     return "redirect:/student/lecture" + "?id=" + id;
   }
 
-  /**
-   * 講義ページ
-   */
   @GetMapping("each_lecture")
-  public String eachLecture(@RequestParam int id, @RequestParam int number, ModelMap model) {
-    String name = lectureMapper.getName(id);
-    model.addAttribute("id", id);
+  public String eachLecture(@RequestParam int id, ModelMap model) {
+    //int lecture_id = eachLectureMapper.getLecture_id(id);
+    //String name = lectureMapper.getName(lecture_id);
 
-    model.addAttribute("name", name);
-    model.addAttribute("number", number);
-    int each_lecture_id = eachLectureMapper.getId(id, number);
+    EachLecture eachLecture = eachLectureMapper.getEachLecture(id);
+    int lecture_id = eachLecture.getLecture_id();
+    String name = lectureMapper.getLectureName(eachLecture.getLecture_id());
+    model.addAttribute("each_lecture", eachLecture);
+    model.addAttribute("lecture_id", lecture_id);
+    model.addAttribute("name",name );
 
-    ArrayList<Question> questions = questionMapper.getQuestions(each_lecture_id);
-    model.addAttribute("questions", questions);
-
-    
+    ArrayList<Question> questions = questionMapper.getQuestions(id);
 
     return "each_lecture.html";
   }
-
 }

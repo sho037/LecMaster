@@ -22,7 +22,7 @@
 
     <form method="post" th:action="@{/teacher/each_lecture_setting}" class="mt-5">
       <input type="hidden" name="id" th:value="${id}">
-      <input type="hidden" name="number" th:value="${number}">
+      <input type="hidden" name="each_lecture_id" th:value="${each_lecture_id}">
       <div class="mb-3">
         <label for="question" class="form-label">Question</label>
         <input type="text" name="question" class="form-control">
@@ -37,36 +37,6 @@
     <!-- 空白 -->
     <div class="mt-5"></div>
 
-  </div>
-  <div th:if="${questions}">
-    問題一覧
-  <table>
-    <tr>
-      <th>問題番号</th>
-      <th>問題</th>
-      <th>答え</th>
-    </tr>
-    <tr th:each="question : ${questions}">
-      <td>[[${question.id}]]</td>
-      <td>[[${question.question}]]</td>
-      <td>[[${question.answer}]]</td>
-    </tr>
-  </table>
-
-  <div th:if="${replies}">
-    生徒の回答一覧
-  <table>
-    <tr>
-      <th>問題</th>
-      <th>名前</th>
-      <th>回答</th>
-    </tr>
-    <tr th:each="reply : ${replies}">
-      <td>[[${reply.question_id}]]</td>
-      <td>[[${reply.name}]]</td>
-      <td>[[${reply.reply}]]</td>
-    </tr>
-  </table>
   </div>
 
   <div th:replace="components/footer"></div>
