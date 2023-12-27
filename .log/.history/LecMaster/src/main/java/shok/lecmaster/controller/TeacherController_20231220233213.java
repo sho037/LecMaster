@@ -5,7 +5,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -31,11 +30,8 @@ import shok.lecmaster.model.Lecture;
 import shok.lecmaster.model.LectureMapper;
 import shok.lecmaster.model.Question;
 import shok.lecmaster.model.QuestionMapper;
-import shok.lecmaster.model.Reply;
 import shok.lecmaster.model.EachLecture;
 import shok.lecmaster.model.EachLectureMapper;
-import shok.lecmaster.model.ReplyMapper;
-
 
 @Controller
 @RequestMapping("/teacher")
@@ -49,9 +45,6 @@ public class TeacherController {
 
   @Autowired
   EachLectureMapper eachLectureMapper;
-
-  @Autowired
-  ReplyMapper replyMapper;
 
   @GetMapping
   public String teacher(@AuthenticationPrincipal UserDetails user, ModelMap model) {
@@ -178,21 +171,14 @@ public class TeacherController {
   }
 
   @GetMapping("each_lecture_setting")
-  public String each_lecture_setting(@RequestParam int id, @RequestParam int number, ModelMap model) {
+  public String each_lecture_setting(@RequestParam int id, @RequestParam int number, @RequestParam int each_lecture_id, ModelMap model) {
 
     String name = lectureMapper.getName(id);
-
-    int each_lecture_id = eachLectureMapper.getId(id, number);
-    
-    ArrayList<Question> questions = questionMapper.getQuestions(each_lecture_id);
-    ArrayList<Reply> replies = replyMapper.getReply(each_lecture_id);
 
     model.addAttribute("name", name);
     model.addAttribute("number", number);
     model.addAttribute("id", id);
-    model.addAttribute("questions", questions);
-    model.addAttribute("replies", replies);
-
+    model.addAttribute("eachlecture_id", each_lecture_id);
 
     return "each_lecture_setting.html";
   }
@@ -200,17 +186,23 @@ public class TeacherController {
   @PostMapping("each_lecture_setting")
   public ModelAndView each_lecture_setting(HttpServletRequest request, ModelMap model) {
 
-    int lecture_id = Integer.parseInt(request.getParameter("id"));
-    int number = Integer.parseInt(request.getParameter("number"));
+    int each_lecture_id = Integer.parseInt(request.getParameter("id"));
     String question = request.getParameter("question");
     String answer = request.getParameter("answer");
 
-    lecture_id=eachLectureMapper.getId(lecture_id, number);
+    int number = eachLectureMapper.getNumber(each_lecture_id);
+
+    questionMapper.setQuestion(each_lecture_id, question, answer);
+    
+    Question questionObj = new Question();
+    questionObj.setEachLectureId(each_lecture_id);
+    questionObj.setQuestion(question);
+    questionObj.setAnswer(answer);
+    questionMapper.addQuestion(questionObj);
     
 
-    questionMapper.setQuestion(lecture_id, question, answer);
-
-    return new ModelAndView("each_lecture_setting", model);
+    //return new ModelAndView("each_lecture_setting", model);
+    return new ModelAndView("redirect:/teacher/each_lecture_setting?id=" + each_lecture_id + "&number=" + number + "&each_lecture_id=" + each_lecture_id);
   }
 
 }

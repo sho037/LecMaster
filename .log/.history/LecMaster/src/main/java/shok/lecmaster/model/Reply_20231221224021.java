@@ -32,7 +32,9 @@ public class Reply {
   public void setName(String name) {
     this.name = name;
   }
- 
+  public void setLectureId(int lecture_id) {
+    this.lecture_id = lecture_id;
+  }
   public void setReply(String reply) {
     this.reply = reply;
   }
@@ -44,7 +46,9 @@ public class Reply {
   public String getName() {
     return name;
   }
-
+  public int getLectureId() {
+    return lecture_id;
+  }
   public String getReply() {
     return reply;
   }

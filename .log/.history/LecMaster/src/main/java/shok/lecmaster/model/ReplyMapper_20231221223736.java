@@ -22,9 +22,9 @@ public interface ReplyMapper {
 
   /**
    * 生徒の回答を取得する
+   */
   @Select("SELECT * FROM reply WHERE lecture_id = ${id} order by question_id;")
   ArrayList<Reply> getReply(int id);
-  */
 
   /**
    * 生徒の回答を登録する
@@ -32,10 +32,4 @@ public interface ReplyMapper {
   @Insert("INSERT INTO reply (name,question_id,each_lecture_id,reply) VALUES (#{name},#{question_id},#{each_lecture_id},#{reply});")
   @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
   void setReply(Reply reply);
-
-  /**
-   * 生徒の回答を取得する
-   */
-  @Select("SELECT * FROM reply WHERE each_lecture_id = ${id} order by question_id;")
-  ArrayList<Reply> getReply(int id);
 }

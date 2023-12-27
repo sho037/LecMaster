@@ -168,14 +168,12 @@ public class StudentContoroller {
     String reply = request.getParameter("reply");
     String name = prin.getName();
     int question_id = Integer.parseInt(request.getParameter("question_id"));
-    int number = Integer.parseInt(request.getParameter("number"));
-    int each_lecture_id = eachLectureMapper.getId(id, number);
 
     Reply replyObj = new Reply();
     replyObj.setName(name);
     replyObj.setQuestion_id(question_id);
     replyObj.setReply(reply);
-    replyObj.setEach_lecture_id(each_lecture_id);
+    replyObj.setLectureId(id);
 
     /* 同じ学生が挿入されないようになっているので例外処理 */
     try {

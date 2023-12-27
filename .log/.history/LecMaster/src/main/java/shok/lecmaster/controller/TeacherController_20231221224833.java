@@ -29,13 +29,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import shok.lecmaster.model.Lecture;
 import shok.lecmaster.model.LectureMapper;
-import shok.lecmaster.model.Question;
 import shok.lecmaster.model.QuestionMapper;
 import shok.lecmaster.model.Reply;
 import shok.lecmaster.model.EachLecture;
 import shok.lecmaster.model.EachLectureMapper;
-import shok.lecmaster.model.ReplyMapper;
-
 
 @Controller
 @RequestMapping("/teacher")
@@ -49,9 +46,6 @@ public class TeacherController {
 
   @Autowired
   EachLectureMapper eachLectureMapper;
-
-  @Autowired
-  ReplyMapper replyMapper;
 
   @GetMapping
   public String teacher(@AuthenticationPrincipal UserDetails user, ModelMap model) {
@@ -183,15 +177,12 @@ public class TeacherController {
     String name = lectureMapper.getName(id);
 
     int each_lecture_id = eachLectureMapper.getId(id, number);
-    
-    ArrayList<Question> questions = questionMapper.getQuestions(each_lecture_id);
+    //返答を取得
     ArrayList<Reply> replies = replyMapper.getReply(each_lecture_id);
 
     model.addAttribute("name", name);
     model.addAttribute("number", number);
     model.addAttribute("id", id);
-    model.addAttribute("questions", questions);
-    model.addAttribute("replies", replies);
 
 
     return "each_lecture_setting.html";

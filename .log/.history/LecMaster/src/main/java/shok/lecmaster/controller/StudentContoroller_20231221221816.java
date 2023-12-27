@@ -168,14 +168,12 @@ public class StudentContoroller {
     String reply = request.getParameter("reply");
     String name = prin.getName();
     int question_id = Integer.parseInt(request.getParameter("question_id"));
-    int number = Integer.parseInt(request.getParameter("number"));
-    int each_lecture_id = eachLectureMapper.getId(id, number);
 
     Reply replyObj = new Reply();
     replyObj.setName(name);
-    replyObj.setQuestion_id(question_id);
+    replyObj.setEachQuestionId(question_id);
     replyObj.setReply(reply);
-    replyObj.setEach_lecture_id(each_lecture_id);
+    replyObj.setLectureId(id);
 
     /* 同じ学生が挿入されないようになっているので例外処理 */
     try {
@@ -190,18 +188,13 @@ public class StudentContoroller {
    * 講義ページ
    */
   @GetMapping("each_lecture")
-  public String eachLecture(@RequestParam int id, @RequestParam int number, ModelMap model) {
+  public String eachLecture(@RequestParam int id, ModelMap model) {
     String name = lectureMapper.getName(id);
-    model.addAttribute("id", id);
 
     model.addAttribute("name", name);
-    model.addAttribute("number", number);
-    int each_lecture_id = eachLectureMapper.getId(id, number);
 
-    ArrayList<Question> questions = questionMapper.getQuestions(each_lecture_id);
-    model.addAttribute("questions", questions);
-
-    
+    ArrayList<EachLecture> eachLectures = eachLectureMapper.getEachLectures(id);
+    model.addAttribute("each_lectures", eachLectures);
 
     return "each_lecture.html";
   }

@@ -11,31 +11,32 @@
 </head>
 
 <body>
-
   <div th:replace="components/header"></div>
 
-  <h1>講義名：[[${name}]]</h1>
+  <div class="container">
 
-  <h2>先生からのメッセージ : [[${message}]]</h2>
+    <!-- 空白 -->
+    <div class="mt-5"></div>
 
-  <h3>各講義一覧</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>講義回</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="lecture, stat:${each_lectures}">
-        <td>
-          <a th:href="@{/student/each_lecture(id=${id},number=${lecture.number})}">
-            [[${lecture.number}]]
-          </a>
-        </td>
-      </tr>
-      </tr>
-    </tbody>
-  </table>
+    <h1>第[[${number}]]回[[${name}]][[${id}]]</h1>
+
+    <form method="post" th:action="@{/teacher/each_lecture_setting}" class="mt-5">
+      <input type="hidden" name="id" th:value="${id}">
+      <div class="mb-3">
+        <label for="question" class="form-label">Question</label>
+        <input type="text" name="question" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="answer" class="form-label">Answer</label>
+        <input type="text" name="answer" class="form-control">
+      </div>
+      <input type="submit" value="送信" class="btn btn-primary">
+    </form>
+
+    <!-- 空白 -->
+    <div class="mt-5"></div>
+
+  </div>
 
   <div th:replace="components/footer"></div>
 
@@ -44,5 +45,6 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
 </body>
+
 
 </html>

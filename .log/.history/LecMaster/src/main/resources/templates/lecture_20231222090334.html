@@ -18,6 +18,18 @@
 
   <h2>先生からのメッセージ : [[${message}]]</h2>
 
+  <div th:each="question : ${questions}">
+    <h2>問題 : [[${question.question}]]</h2>
+
+    <form method="post" th:action="@{/student/reply}">
+      <input type="hidden" name="id" th:value="${question.each_lecture_id}">
+      <input type="hidden" name="question_id" th:value="${question.id}">
+      <input type="text" name="reply">
+      <input type="submit" value="送信">
+    </form>
+
+  </div>
+
   <h3>各講義一覧</h3>
   <table class="table table-striped">
     <thead>

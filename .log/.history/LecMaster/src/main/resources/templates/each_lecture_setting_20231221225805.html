@@ -44,16 +44,15 @@
     <tr>
       <th>問題番号</th>
       <th>問題</th>
-      <th>答え</th>
+      <th>回答</th>
     </tr>
     <tr th:each="question : ${questions}">
       <td>[[${question.id}]]</td>
       <td>[[${question.question}]]</td>
       <td>[[${question.answer}]]</td>
     </tr>
-  </table>
 
-  <div th:if="${replies}">
+  <div th:if=${replies}">
     生徒の回答一覧
   <table>
     <tr>

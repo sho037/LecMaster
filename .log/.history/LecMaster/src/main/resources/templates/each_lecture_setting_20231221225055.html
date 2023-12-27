@@ -38,23 +38,8 @@
     <div class="mt-5"></div>
 
   </div>
-  <div th:if="${questions}">
-    問題一覧
-  <table>
-    <tr>
-      <th>問題番号</th>
-      <th>問題</th>
-      <th>答え</th>
-    </tr>
-    <tr th:each="question : ${questions}">
-      <td>[[${question.id}]]</td>
-      <td>[[${question.question}]]</td>
-      <td>[[${question.answer}]]</td>
-    </tr>
-  </table>
 
-  <div th:if="${replies}">
-    生徒の回答一覧
+  生徒の回答一覧
   <table>
     <tr>
       <th>問題</th>
@@ -62,12 +47,10 @@
       <th>回答</th>
     </tr>
     <tr th:each="reply : ${replies}">
-      <td>[[${reply.question_id}]]</td>
-      <td>[[${reply.name}]]</td>
-      <td>[[${reply.reply}]]</td>
-    </tr>
+      <td>[[${question.question}]]</td>
+      <td>[[${question.name}]]</td>
+      <td>[[${question.reply}]]</td>
   </table>
-  </div>
 
   <div th:replace="components/footer"></div>
 
