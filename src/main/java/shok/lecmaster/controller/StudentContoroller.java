@@ -82,10 +82,12 @@ public class StudentContoroller {
     Timestamp timestamp = Timestamp.valueOf(now);
     LocalDate date = timestamp.toLocalDateTime().toLocalDate();
 
+    // 出席時間が講義時間中のみ出席とする
     ArrayList<EachLecture> eachLectures = eachLectureMapper.getEachLectures(id);
     for (EachLecture eachLecture : eachLectures) {
       if (isAttendable(eachLecture, date, now)) {
         registerAttendance(eachLecture.getId(), prin.getName());
+
         return "redirect:/student/lecture?id=" + id;
       }
     }
@@ -112,6 +114,12 @@ public class StudentContoroller {
     Attend attend = new Attend();
     attend.setEachLectureId(lectureId);
     attend.setName(studentName);
+
+    // 複数回の講義に出席しつつ、同じ講義回には1度しか出席できないようにする
+    // 授業回にnullが存在する場合はなにもしない
+    if (attendMapper.checkAttend(attend) >= 1) {
+      return;
+    }
     attendMapper.addAttend(attend);
   }
 
@@ -200,8 +208,6 @@ public class StudentContoroller {
 
     ArrayList<Question> questions = questionMapper.getQuestions(each_lecture_id);
     model.addAttribute("questions", questions);
-
-    
 
     return "each_lecture.html";
   }
