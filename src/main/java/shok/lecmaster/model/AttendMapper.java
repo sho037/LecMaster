@@ -24,4 +24,14 @@ public interface AttendMapper {
   @Insert("INSERT INTO attend (each_lecture_id, name) VALUES (#{each_lecture_id}, #{name});")
   @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
   void addAttend(Attend attend);
+
+  /**
+   * 出席してるか確認する
+   *
+   * @param attend 出席者
+   */
+
+  @Select("SELECT COUNT(*) FROM attend WHERE each_lecture_id = #{each_lecture_id} AND name = #{name} AND number IS NULL;")
+  int checkAttend(Attend attend);
+
 }
