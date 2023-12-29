@@ -35,8 +35,6 @@ import shok.lecmaster.model.Reply;
 import shok.lecmaster.model.EachLecture;
 import shok.lecmaster.model.EachLectureMapper;
 import shok.lecmaster.model.ReplyMapper;
-import shok.lecmaster.model.Attend;
-import shok.lecmaster.model.AttendMapper;
 
 
 @Controller
@@ -198,7 +196,6 @@ public class TeacherController {
     model.addAttribute("id", id);
     model.addAttribute("questions", questions);
     model.addAttribute("replies", replies);
-    model.addAttribute("attends", attends);
 
 
     return "each_lecture_setting.html";

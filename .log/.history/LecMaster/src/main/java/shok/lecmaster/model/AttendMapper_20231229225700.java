@@ -31,14 +31,7 @@ public interface AttendMapper {
    * @param attend 出席者
    */
 
-  @Select("SELECT COUNT(*) FROM attend WHERE each_lecture_id = #{each_lecture_id} AND name = #{name};")
+  @Select("SELECT COUNT(*) FROM attend WHERE each_lecture_id = #{each_lecture_id} AND name = #{name} AND number IS NULL;")
   int checkAttend(Attend attend);
-
-  /**
-   * 特定の講義の出席者を取得する
-   */
-  @Select("SELECT * FROM attend WHERE each_lecture_id = #{each_lecture_id};")
-  ArrayList<Attend> getAttendByEachLectureId(int each_lecture_id);
-  
 
 }

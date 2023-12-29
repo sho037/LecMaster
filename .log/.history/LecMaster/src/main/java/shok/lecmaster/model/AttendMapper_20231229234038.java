@@ -38,7 +38,6 @@ public interface AttendMapper {
    * 特定の講義の出席者を取得する
    */
   @Select("SELECT * FROM attend WHERE each_lecture_id = #{each_lecture_id};")
-  ArrayList<Attend> getAttendByEachLectureId(int each_lecture_id);
   
 
 }
