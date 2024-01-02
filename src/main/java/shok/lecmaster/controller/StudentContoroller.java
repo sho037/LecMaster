@@ -82,10 +82,12 @@ public class StudentContoroller {
     Timestamp timestamp = Timestamp.valueOf(now);
     LocalDate date = timestamp.toLocalDateTime().toLocalDate();
 
+    // 出席時間が講義時間中のみ出席とする
     ArrayList<EachLecture> eachLectures = eachLectureMapper.getEachLectures(id);
     for (EachLecture eachLecture : eachLectures) {
       if (isAttendable(eachLecture, date, now)) {
         registerAttendance(eachLecture.getId(), prin.getName());
+
         return "redirect:/student/lecture?id=" + id;
       }
     }
@@ -112,6 +114,12 @@ public class StudentContoroller {
     Attend attend = new Attend();
     attend.setEachLectureId(lectureId);
     attend.setName(studentName);
+
+    // 複数回の講義に出席しつつ、同じ講義回には1度しか出席できないようにする
+    // 授業回にnullが存在する場合はなにもしない
+    if (attendMapper.checkAttend(attend) >= 1) {
+      return;
+    }
     attendMapper.addAttend(attend);
   }
 
@@ -145,6 +153,7 @@ public class StudentContoroller {
     String name = lectureMapper.getName(id);
 
     model.addAttribute("name", name);
+    model.addAttribute("id", id);
 
     String message = lectureMapper.getMessage(id);
     model.addAttribute("message", message);
@@ -167,12 +176,14 @@ public class StudentContoroller {
     String reply = request.getParameter("reply");
     String name = prin.getName();
     int question_id = Integer.parseInt(request.getParameter("question_id"));
+    int number = Integer.parseInt(request.getParameter("number"));
+    int each_lecture_id = eachLectureMapper.getId(id, number);
 
     Reply replyObj = new Reply();
     replyObj.setName(name);
-    replyObj.setEachQuestionId(question_id);
+    replyObj.setQuestion_id(question_id);
     replyObj.setReply(reply);
-    replyObj.setLectureId(id);
+    replyObj.setEach_lecture_id(each_lecture_id);
 
     /* 同じ学生が挿入されないようになっているので例外処理 */
     try {
@@ -182,4 +193,23 @@ public class StudentContoroller {
 
     return "redirect:/student/lecture" + "?id=" + id;
   }
+
+  /**
+   * 講義ページ
+   */
+  @GetMapping("each_lecture")
+  public String eachLecture(@RequestParam int id, @RequestParam int number, ModelMap model) {
+    String name = lectureMapper.getName(id);
+    model.addAttribute("id", id);
+
+    model.addAttribute("name", name);
+    model.addAttribute("number", number);
+    int each_lecture_id = eachLectureMapper.getId(id, number);
+
+    ArrayList<Question> questions = questionMapper.getQuestions(each_lecture_id);
+    model.addAttribute("questions", questions);
+
+    return "each_lecture.html";
+  }
+
 }

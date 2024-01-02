@@ -1,0 +1,82 @@
+package shok.lecmaster.model;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
+import java.util.ArrayList;
+import java.time.LocalTime;
+import java.sql.Timestamp;
+
+@Mapper
+public interface EachLectureMapper {
+  /**
+   * それぞれの講義を追加する
+   *
+   * @param eachLecture
+   * @return
+   */
+  @Insert("INSERT INTO eachLecture (number, lecture_id, start_date,start_time,end_time) VALUES (#{number}, #{lecture_id}, #{start_date},#{start_time},#{end_time});")
+  void addEachLecture(EachLecture eachLecture);
+
+  /**
+   * 特定の授業のすべて講義回を取得する
+   *
+   * @return
+   */
+  @Select("SELECT * FROM eachLecture where lecture_id=  #{id};")
+  ArrayList<EachLecture> getEachLectures(int id);
+
+  /**
+   * 特定の授業の特定の講義回を取得する
+   *
+   * @param lecture_id
+   * @return number
+   *
+   */
+
+  @Select("SELECT number FROM eachLecture where lecture_id=  #{lecture_id};")
+  int getNum(int lecture_id);
+
+  /*
+   * 授業の開始時間を取得する
+   *
+   */
+  @Select("SELECT start_time FROM eachLecture where lecture_id=  #{lecture_id} AND number = 1;")
+  LocalTime getStart_time(int lecture_id);
+
+  /*
+   * 授業の終了時間を取得する
+   *
+   */
+  @Select("SELECT end_time FROM eachLecture where lecture_id=  #{lecture_id} AND number = 1;")
+  LocalTime getEnd_time(int lecture_id);
+
+  /*
+   * 授業の日付を取得する
+   *
+   */
+  @Select("SELECT start_date FROM eachLecture where lecture_id = #{lecture_id}")
+  Timestamp getStart_date(int lecture_id);
+
+  /*
+   * 特定の授業を取得する
+   *
+   */
+  @Select("SELECT * FROM eachLecture where id = #{each_lecture_id}")
+  EachLecture getEachLecture(int each_lecture_id);
+
+  /*
+   * 特定の授業のlectuer_idを取得する
+   *
+   */
+  @Select("SELECT lecture_id FROM eachLecture where id = #{each_lecture_id}")
+  int getLecture_id(int each_lecture_id);
+
+  /*
+   * 特定の授業のnumberを取得する
+   *
+   */
+  @Select("SELECT number FROM eachLecture where id = #{each_lecture_id}")
+  int getNumber(int each_lecture_id);
+}
