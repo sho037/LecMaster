@@ -10,6 +10,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 @Configuration
 @EnableWebSecurity
 public class AuthConfiguration {
@@ -42,21 +47,67 @@ public class AuthConfiguration {
   @Bean
   public InMemoryUserDetailsManager userDetailsService() {
     // $ sshrun htpasswd -nbBC 10 USERNAME PASSWORD
+    // TEACHERロールのユーザ取得
+    ArrayList<UserInfo> teachers = GetUserInfos("src/main/java/shok/lecmaster/security/teacher.csv");
 
-    UserDetails[] users = {
-        User.withUsername("teacher1").password("{bcrypt}$2y$10$PTIElp2sSt4AGXmM/MSMdeactS214M5/DLzjVMzTHMdUB.SZnLnYW")
-            .roles("TEACHER").build(),
-        User.withUsername("teacher2").password("{bcrypt}$2y$10$C7hKg.ULqTg8qK7udpLSCOHxHbruUz0yf8gmC9FURcvB1c8drVEfa")
-            .roles("TEACHER").build(),
-        User.withUsername("student1").password("{bcrypt}$2y$10$T3jSu12fw9Gmm1p591CpbuGLfI/ECh88lCpdXUGQcjr4zcDMO1nkC")
-            .roles("STUDENT").build(),
-        User.withUsername("student2").password("{bcrypt}$2y$10$IM00QILoPNl3N.3X3oJhMOByxa2HNeUgV6GQ9v3Hl1OtoEsjNIZa.")
-            .roles("STUDENT").build(),
-        User.withUsername("student3").password("{bcrypt}$2y$10$C.xpyPCaxuVSTITaVRRN5.bby1//m256EwKHujSdObAjTpLjMPzEy")
-            .roles("STUDENT").build(),
-    };
+    // STUDENTロールのユーザ取得
+    ArrayList<UserInfo> students = GetUserInfos("src/main/java/shok/lecmaster/security/student.csv");
+
+    // 生成したユーザを格納する
+    UserDetails[] users = new UserDetails[teachers.size() + students.size()];
+    for (int i = 0; i < teachers.size(); i++) {
+      users[i] = User.withUsername(teachers.get(i).getUsername())
+          .password("{bcrypt}" + teachers.get(i).getPassword())
+          .roles("TEACHER").build();
+    }
+    for (int i = 0; i < students.size(); i++) {
+      users[teachers.size() + i] = User.withUsername(students.get(i).getUsername())
+          .password("{bcrypt}" + students.get(i).getPassword())
+          .roles("STUDENT").build();
+    }
 
     // 生成したユーザをImMemoryUserDetailsManagerに渡す（いくつでも良い）
     return new InMemoryUserDetailsManager(users);
+  }
+
+  /**
+   * ファイルからユーザー情報を取得する
+   *
+   * @return
+   */
+  private ArrayList<UserInfo> GetUserInfos(String path) {
+    ArrayList<UserInfo> users = new ArrayList<UserInfo>();
+
+    try {
+      BufferedReader br = new BufferedReader(new FileReader(path));
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] values = line.split(",");
+        users.add(new UserInfo(values[0], values[1]));
+      }
+      br.close();
+    } catch (IOException e) {
+      System.out.println(e);
+    }
+
+    return users;
+  }
+}
+
+class UserInfo {
+  private String username;
+  private String password;
+
+  public UserInfo(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
+
+  public String getUsername() {
+    return this.username;
+  }
+
+  public String getPassword() {
+    return this.password;
   }
 }
