@@ -198,7 +198,6 @@ public class TeacherController {
     model.addAttribute("id", id);
     model.addAttribute("questions", questions);
     model.addAttribute("replies", replies);
-    model.addAttribute("attends", attends);
 
 
     return "each_lecture_setting.html";
