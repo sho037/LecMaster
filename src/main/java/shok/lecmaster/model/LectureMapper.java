@@ -76,4 +76,21 @@ public interface LectureMapper {
   @Update("UPDATE lecture set message = #{message} WHERE id = #{id};")
   void setMessage(@Param("id") int id, @Param("message") String message);
 
+   /**
+   * 生徒へのメッセージを登録する
+   *
+   * @param id      講義ID
+   * @param message 生徒へのメッセージ
+   */
+  @Update("UPDATE lecture set send_time = #{send_time} WHERE id = #{id};")
+  void setSend_time(@Param("id") int id, @Param("send_time") String send_time);
+
+  /*
+   * メッセージを送信した時間を取得する
+   *
+   *
+   */
+  @Select("SELECT send_time FROM lecture WHERE id = ${id}")
+  String getSend_time(@Param("id") int id);
+
 }

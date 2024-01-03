@@ -2,6 +2,7 @@ CREATE TABLE lecture (
   id IDENTITY,
   name VARCHAR unique,
   message VARCHAR,
+  send_time VARCHAR,
   password VARCHAR NOT NULL DEFAULT '合言葉'
 );
 
