@@ -5,13 +5,10 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -19,10 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import ch.qos.logback.core.model.Model;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -37,7 +31,6 @@ import shok.lecmaster.model.EachLectureMapper;
 import shok.lecmaster.model.ReplyMapper;
 import shok.lecmaster.model.Attend;
 import shok.lecmaster.model.AttendMapper;
-
 
 @Controller
 @RequestMapping("/teacher")
@@ -146,7 +139,7 @@ public class TeacherController {
     // 日付と時間の文字列を結合し、LocalDateTimeに変換
     LocalDateTime startDateTime = LocalDateTime.parse(startDateStr + " " + startTimeStr, formatter);
 
-    //時間の文字列をLocalTimeに変換
+    // 時間の文字列をLocalTimeに変換
     LocalTime localTime = LocalTime.parse(startTimeStr, Timeformatter);
 
     // LocalDateTimeをjava.sql.Timestampに変換
@@ -188,7 +181,7 @@ public class TeacherController {
     String name = lectureMapper.getName(id);
 
     int each_lecture_id = eachLectureMapper.getId(id, number);
-    
+
     ArrayList<Attend> attends = attendMapper.getAttendByEachLectureId(each_lecture_id);
     ArrayList<Question> questions = questionMapper.getQuestions(each_lecture_id);
     ArrayList<Reply> replies = replyMapper.getReply(each_lecture_id);
@@ -199,7 +192,6 @@ public class TeacherController {
     model.addAttribute("questions", questions);
     model.addAttribute("replies", replies);
     model.addAttribute("attends", attends);
-
 
     return "each_lecture_setting.html";
   }
@@ -212,8 +204,7 @@ public class TeacherController {
     String question = request.getParameter("question");
     String answer = request.getParameter("answer");
 
-    lecture_id=eachLectureMapper.getId(lecture_id, number);
-    
+    lecture_id = eachLectureMapper.getId(lecture_id, number);
 
     questionMapper.setQuestion(lecture_id, question, answer);
 

@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +28,6 @@ import shok.lecmaster.model.Question;
 import shok.lecmaster.model.QuestionMapper;
 import shok.lecmaster.model.Reply;
 import shok.lecmaster.model.ReplyMapper;
-import shok.lecmaster.model.EachLecture;
 import shok.lecmaster.model.EachLectureMapper;
 
 @Controller
