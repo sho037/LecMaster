@@ -158,6 +158,9 @@ public class StudentContoroller {
     String message = lectureMapper.getMessage(id);
     model.addAttribute("message", message);
 
+    String send_time = lectureMapper.getSend_time(id);
+    model.addAttribute("send_time", send_time);
+
     ArrayList<Question> questions = questionMapper.getQuestions(id);
     model.addAttribute("questions", questions);
 

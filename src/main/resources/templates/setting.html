@@ -39,6 +39,7 @@
     <div class="message mt-2">
       <h3>生徒へのメッセージ</h3>
       <p th:if="${message}">[[${message}]]</p>
+      <p th:if="${NowDate}">送信時刻 : [[${NowDate}]]</p>
 
       <form method="post" th:action="@{/teacher/message(id=${id})}">
         <div class="row">
