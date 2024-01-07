@@ -72,6 +72,15 @@ public class TeacherController {
     String password = lectureMapper.getPassword(id);
     String message = lectureMapper.getMessage(id);
 
+    if(!(message == null)){
+      LocalDateTime nowDate = LocalDateTime.now();
+
+      DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("HH時mm分ss秒");
+      String send_time = dtf2.format(nowDate);
+      lectureMapper.setSend_time(id,send_time);
+      model.addAttribute("NowDate", send_time);
+    }
+
     model.addAttribute("id", id);
     model.addAttribute("name", name);
     model.addAttribute("password", password);
@@ -94,7 +103,7 @@ public class TeacherController {
   }
 
   @PostMapping("message")
-  public String sendMessage(HttpServletRequest request) {
+  public String sendMessage(HttpServletRequest request, ModelMap model) {
     int id = Integer.parseInt(request.getParameter("id"));
     String message = request.getParameter("message");
 
@@ -204,7 +213,8 @@ public class TeacherController {
     String question = request.getParameter("question");
     String answer = request.getParameter("answer");
 
-    lecture_id = eachLectureMapper.getId(lecture_id, number);
+    lecture_id=eachLectureMapper.getId(lecture_id, number);
+
 
     questionMapper.setQuestion(lecture_id, question, answer);
 
