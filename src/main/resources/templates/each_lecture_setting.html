@@ -12,9 +12,7 @@
 
 <body>
   <div th:replace="components/header"></div>
-
   <div class="container">
-
     <!-- 空白 -->
     <div class="mt-5"></div>
 
@@ -37,51 +35,64 @@
     <!-- 空白 -->
     <div class="mt-5"></div>
 
-  </div>
+    <div>
+      <h3>出席者一覧</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>名前</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="student : ${attends}">
+            <td>[[${student.name}]]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <div>
-    <h3>出席者一覧</h3>
-    <table>
-      <tr>
-        <th>名前</th>
-      </tr>
-      <tr th:each="student : ${attends}">
-        <td>[[${student.name}]]</td>
-        </td>
-      </tr>
-    </table>
-  </div>
+    <div th:if="${questions}">
+      <h3>問題一覧</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>問題番号</th>
+            <th>問題</th>
+            <th>答え</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="question : ${questions}">
+            <td>[[${question.id}]]</td>
+            <td>[[${question.question}]]</td>
+            <td>[[${question.answer}]]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <div th:if="${questions}">
-    <h3>問題一覧</h3>
-    <table>
-      <tr>
-        <th>問題番号</th>
-        <th>問題</th>
-        <th>答え</th>
-      </tr>
-      <tr th:each="question : ${questions}">
-        <td>[[${question.id}]]</td>
-        <td>[[${question.question}]]</td>
-        <td>[[${question.answer}]]</td>
-      </tr>
-    </table>
-  </div>
+    <div th:if="${replies}">
+      <h3>生徒の回答一覧</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>問題</th>
+            <th>名前</th>
+            <th>回答</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="reply : ${replies}">
+            <td>[[${reply.question_id}]]</td>
+            <td>[[${reply.name}]]</td>
+            <td>[[${reply.reply}]]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <div th:if="${replies}">
-    <h3>生徒の回答一覧</h3>
-    <table>
-      <tr>
-        <th>問題</th>
-        <th>名前</th>
-        <th>回答</th>
-      </tr>
-      <tr th:each="reply : ${replies}">
-        <td>[[${reply.question_id}]]</td>
-        <td>[[${reply.name}]]</td>
-        <td>[[${reply.reply}]]</td>
-      </tr>
-    </table>
+    <!-- 空白 -->
+    <div class="mt-5"></div>
   </div>
 
   <div th:replace="components/footer"></div>
@@ -91,6 +102,5 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
 </body>
-
 
 </html>

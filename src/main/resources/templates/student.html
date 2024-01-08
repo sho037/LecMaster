@@ -11,27 +11,34 @@
 </head>
 
 <body>
-
   <div th:replace="components/header"></div>
+  <div class="container">
+    <!-- 空白 -->
+    <div class="mt-5"></div>
 
-  <!--  生徒の講義の一覧を表示する-->
-  <h3>講義一覧</h3>
+    <!--  生徒の講義の一覧を表示する-->
+    <h3>講義一覧</h3>
 
-  <table>
-    <thead>
-      <tr>
-        <th>講義名</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="lecture, stat:${lectures}">
-        <td><a th:href="@{/student/attend(id=${lecture.id})}">[[${lecture.name}]]</a></td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">講義名</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="lecture, stat:${lectures}">
+          <td><a th:href="@{/student/attend(id=${lecture.id})}" class="text-decoration-none">[[${lecture.name}]]</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-  <!--  生徒の未提出課題の一覧を表示する-->
-  <h3>未提出課題</h3>
+    <!--  生徒の未提出課題の一覧を表示する-->
+    <h3>未提出課題</h3>
+
+    <!-- 空白 -->
+    <div class="mt-5"></div>
+  </div>
 
   <div th:replace="components/footer"></div>
 
