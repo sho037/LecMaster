@@ -11,18 +11,24 @@
 </head>
 
 <body>
-
   <div th:replace="components/header"></div>
+  <div class="container">
+    <!-- 空白 -->
+    <div class="mt-5"></div>
 
-  <h1>[[${name}]]出席ページ</h1>
-  <h2>合言葉を入力してください</h2>
-  <form method="post" th:action="@{/student/attend(id=${id})}">
-    <input type="text" name="password">
-    <input type="submit" value="送信">
-  </form>
+    <h1>[[${name}]]出席ページ</h1>
+    <h2>合言葉を入力してください</h2>
+    <form method="post" th:action="@{/student/attend(id=${id})}">
+      <input type="text" name="password">
+      <input type="submit" value="送信">
+    </form>
 
-  <div th:if="${incorrect}">
-    <p>合言葉が違います</p>
+    <div th:if="${incorrect}">
+      <p>合言葉が違います</p>
+    </div>
+
+    <!-- 空白 -->
+    <div class="mt-5"></div>
   </div>
 
   <div th:replace="components/footer"></div>
