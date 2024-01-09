@@ -12,24 +12,27 @@
 
 <body>
   <div th:replace="components/header"></div>
+  <div class="container">
+    <!-- 空白 -->
+    <div class="mt-5"></div>
 
-  <h1>第[[${number}]]回[[${name}]]</h1>
+    <h1>第[[${number}]]回[[${name}]]</h1>
 
-  <div th:each="question : ${questions}">
-    <h2>問題 : [[${question.question}]]</h2>
-    回答入力
-    <form method="post" th:action="@{/student/reply}">
-      <input type="hidden" name="id" th:value="${id}">
-      <input type="hidden" name="number" th:value="${number}">
-      <input type="hidden" name="question_id" th:value="${question.id}">
-      <input type="text" name="reply">
-      <input type="submit" value="送信">
+    <div th:each="question : ${questions}">
+      <h2>問題 : [[${question.question}]]</h2>
+      回答入力
+      <form method="post" th:action="@{/student/reply}">
+        <input type="hidden" name="id" th:value="${id}">
+        <input type="hidden" name="number" th:value="${number}">
+        <input type="hidden" name="question_id" th:value="${question.id}">
+        <input type="text" name="reply">
+        <input type="submit" value="送信">
+      </form>
+    </div>
+
+    <!-- 空白 -->
+    <div class="mt-5"></div>
   </div>
-
-
-  
-
-
 
   <div th:replace="components/footer"></div>
   <!-- Bootstrap -->

@@ -11,32 +11,37 @@
 </head>
 
 <body>
-
   <div th:replace="components/header"></div>
+  <div class="container">
+    <!-- 空白 -->
+    <div class="mt-5"></div>
 
-  <h1>講義名：[[${name}]]</h1>
+    <h1>講義名：[[${name}]]</h1>
 
-  <h2>先生からのメッセージ : [[${message}]]</h2>
-  <p th:if="${send_time}">送信時刻 : [[${send_time}]]</p>
+    <h2>先生からのメッセージ : [[${message}]]</h2>
+    <p th:if="${send_time}">送信時刻 : [[${send_time}]]</p>
 
-  <h3>各講義一覧</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>講義回</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="lecture, stat:${each_lectures}">
-        <td>
-          <a th:href="@{/student/each_lecture(id=${id},number=${lecture.number})}">
-            [[${lecture.number}]]
-          </a>
-        </td>
-      </tr>
-      </tr>
-    </tbody>
-  </table>
+    <h3>各講義一覧</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>講義回</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="lecture, stat:${each_lectures}">
+          <td>
+            <a th:href="@{/student/each_lecture(id=${id},number=${lecture.number})}" class="text-decoration-none">
+              [[${lecture.number}]]
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 空白 -->
+    <div class="mt-5"></div>
+  </div>
 
   <div th:replace="components/footer"></div>
 
