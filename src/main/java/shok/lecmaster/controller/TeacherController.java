@@ -72,12 +72,12 @@ public class TeacherController {
     String password = lectureMapper.getPassword(id);
     String message = lectureMapper.getMessage(id);
 
-    if(!(message == null)){
+    if (!(message == null)) {
       LocalDateTime nowDate = LocalDateTime.now();
 
       DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("HH時mm分ss秒");
       String send_time = dtf2.format(nowDate);
-      lectureMapper.setSend_time(id,send_time);
+      lectureMapper.setSend_time(id, send_time);
       model.addAttribute("NowDate", send_time);
     }
 
@@ -212,11 +212,22 @@ public class TeacherController {
     int number = Integer.parseInt(request.getParameter("number"));
     String question = request.getParameter("question");
     String answer = request.getParameter("answer");
+    String name = lectureMapper.getName(lecture_id);
+    int each_lecture_id = eachLectureMapper.getId(lecture_id, number);
+    ArrayList<Attend> attends = attendMapper.getAttendByEachLectureId(each_lecture_id);
+    ArrayList<Question> questions = questionMapper.getQuestions(each_lecture_id);
+    ArrayList<Reply> replies = replyMapper.getReply(each_lecture_id);
 
-    lecture_id=eachLectureMapper.getId(lecture_id, number);
-
+    lecture_id = eachLectureMapper.getId(lecture_id, number);
 
     questionMapper.setQuestion(lecture_id, question, answer);
+
+    model.addAttribute("name", name);
+    model.addAttribute("number", number);
+    model.addAttribute("id", lecture_id);
+    model.addAttribute("questions", questions);
+    model.addAttribute("replies", replies);
+    model.addAttribute("attends", attends);
 
     return new ModelAndView("each_lecture_setting", model);
   }
