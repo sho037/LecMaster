@@ -49,6 +49,15 @@ public class StudentContoroller {
   @Autowired
   EachLectureMapper eachLectureMapper;
 
+  /**
+   * 生徒用トップページ
+   * ログインしていない場合はログインページにリダイレクトする
+   * ログインしているユーザーの権限が生徒でない場合はトップページにリダイレクトする
+   *
+   * @param user
+   * @param model
+   * @return
+   */
   @GetMapping
   public String student(@AuthenticationPrincipal UserDetails user, ModelMap model) {
 
@@ -64,6 +73,10 @@ public class StudentContoroller {
     return "student.html";
   }
 
+  /**
+   * 出席ページ
+   * 講義のパスワードが間違っていた場合はreattendにリダイレクトする
+   */
   @PostMapping("attend")
   public String attend(HttpServletRequest request, Model model, Principal prin) {
     int id = Integer.parseInt(request.getParameter("id"));
@@ -95,6 +108,14 @@ public class StudentContoroller {
     return "redirect:/student/lecture";
   }
 
+  /**
+   * 出席可能かどうかを判定する
+   *
+   * @param eachLecture
+   * @param date
+   * @param now
+   * @return
+   */
   private boolean isAttendable(EachLecture eachLecture, LocalDate date, LocalDateTime now) {
     LocalDate lectureStartDate = eachLecture.getStartDate().toLocalDateTime().toLocalDate();
     // 今日の授業でない場合
@@ -110,6 +131,12 @@ public class StudentContoroller {
     return now.isAfter(startTimestamp.toLocalDateTime()) && now.isBefore(endTimestamp.toLocalDateTime());
   }
 
+  /**
+   * 出席を登録する
+   *
+   * @param lectureId
+   * @param studentName
+   */
   private void registerAttendance(int lectureId, String studentName) {
     Attend attend = new Attend();
     attend.setEachLectureId(lectureId);
@@ -123,6 +150,10 @@ public class StudentContoroller {
     attendMapper.addAttend(attend);
   }
 
+  /**
+   * 出席ページ
+   * 講義のパスワードが間違っていた場合はreattendにリダイレクトする
+   */
   @GetMapping("attend")
   public String attend(@RequestParam int id, ModelMap model) {
     String name = lectureMapper.getName(id);
@@ -133,6 +164,10 @@ public class StudentContoroller {
     return "attend.html";
   }
 
+  /**
+   * 出席ページ
+   * 講義のパスワードが間違っていた場合はreattendにリダイレクトする
+   */
   @GetMapping("reattend")
   public String reattend(@RequestParam int id, ModelMap model) {
     String name = lectureMapper.getName(id);
@@ -218,5 +253,4 @@ public class StudentContoroller {
 
     return "each_lecture.html";
   }
-
 }
