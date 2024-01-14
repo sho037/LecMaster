@@ -29,7 +29,8 @@ echo "初期パスワードを指定してください: "
 read password
 
 # ユーザー名とハッシュ化されたパスワードを生成してファイルに追記する
-for (( i=start; i<=end; i++ )); do
+# for (( i=start; i<=end; i++ )); do
+for i in `seq $start $end`; do
     username="$prefix$i"
     hash=$(sshrun htpasswd -nbBC 10 "$username" "$password" | cut -d ":" -f 2)
     echo "$username,$hash" >> $file
