@@ -86,11 +86,13 @@ public class StudentContoroller {
       if (isAttendable(eachLecture, date, now)) {
         registerAttendance(eachLecture.getId(), prin.getName());
 
-        return "redirect:/student/lecture?id=" + id;
+        request.getSession().setAttribute("lecture_id", id);
+        return "redirect:/student/lecture";
       }
     }
 
-    return "redirect:/student/lecture?id=" + id;
+    request.getSession().setAttribute("lecture_id", id);
+    return "redirect:/student/lecture";
   }
 
   private boolean isAttendable(EachLecture eachLecture, LocalDate date, LocalDateTime now) {
@@ -147,7 +149,8 @@ public class StudentContoroller {
    * attendにデータが挿入されている生徒のみがアクセスできる
    */
   @GetMapping("lecture")
-  public String lecture(@RequestParam int id, ModelMap model) {
+  public String lecture(HttpServletRequest request, ModelMap model) {
+    int id = (int) request.getSession().getAttribute("lecture_id");
     String name = lectureMapper.getName(id);
 
     model.addAttribute("name", name);
@@ -192,14 +195,17 @@ public class StudentContoroller {
     } catch (Exception e) {
     }
 
-    return "redirect:/student/lecture" + "?id=" + id;
+    request.getSession().setAttribute("lecture_id", id);
+    return "redirect:/student/lecture";
   }
 
   /**
    * 講義ページ
    */
-  @GetMapping("each_lecture")
-  public String eachLecture(@RequestParam int id, @RequestParam int number, ModelMap model) {
+  @PostMapping("each_lecture")
+  public String eachLecture(HttpServletRequest request, ModelMap model) {
+    int id = Integer.parseInt(request.getParameter("lecture_id"));
+    int number = Integer.parseInt(request.getParameter("lecture_number"));
     String name = lectureMapper.getName(id);
     model.addAttribute("id", id);
 
