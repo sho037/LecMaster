@@ -3,8 +3,13 @@
 > [!CAUTION]
 > このWebアプリケーションはJDKがインストールされた環境で動作します。
 
-* 動作確認済み環境は
+* 動作確認済み環境はUbuntuになります。
 
+git でリポジトリをクローンしてください。
+```bash
+git clone https://github.com/sho037/LecMaster.git
+cd LecMaster
+```
 
 *  実行前
 　インストール後は`src/main/java/shok/lecmaster/security/`ディレクトリに`student.csv`と`teacher.csv`ファイルを設置してください。
