@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LecMaster</title>
   <style>
-    td.sell-link a{
+    td.sell-link a {
       height: 100%;
-	    padding: 2px 5px;
-	    display: block;
-	    align-items: center;
+      padding: 2px 5px;
+      display: block;
+      align-items: center;
     }
   </style>
   <!-- Bootstrap -->
@@ -69,7 +69,7 @@
         </thead>
         <tbody>
           <tr th:each="lecture, stat:${each_lectures}">
-            <td class = "sell-link">
+            <td class="sell-link">
               <a th:href="@{/teacher/each_lecture_setting(id=${id},number=${lecture.number})}">
                 第[[${lecture.number}]]回 [[${lecture.start_date}]]
               </a>

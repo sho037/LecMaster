@@ -49,6 +49,15 @@ public class StudentContoroller {
   @Autowired
   EachLectureMapper eachLectureMapper;
 
+  /**
+   * 生徒用トップページ
+   * ログインしていない場合はログインページにリダイレクトする
+   * ログインしているユーザーの権限が生徒でない場合はトップページにリダイレクトする
+   *
+   * @param user
+   * @param model
+   * @return
+   */
   @GetMapping
   public String student(@AuthenticationPrincipal UserDetails user, ModelMap model) {
 
@@ -64,6 +73,10 @@ public class StudentContoroller {
     return "student.html";
   }
 
+  /**
+   * 出席ページ
+   * 講義のパスワードが間違っていた場合はreattendにリダイレクトする
+   */
   @PostMapping("attend")
   public String attend(HttpServletRequest request, Model model, Principal prin) {
     int id = Integer.parseInt(request.getParameter("id"));
@@ -86,13 +99,23 @@ public class StudentContoroller {
       if (isAttendable(eachLecture, date, now)) {
         registerAttendance(eachLecture.getId(), prin.getName());
 
-        return "redirect:/student/lecture?id=" + id;
+        request.getSession().setAttribute("lecture_id", id);
+        return "redirect:/student/lecture";
       }
     }
 
-    return "redirect:/student/lecture?id=" + id;
+    request.getSession().setAttribute("lecture_id", id);
+    return "redirect:/student/lecture";
   }
 
+  /**
+   * 出席可能かどうかを判定する
+   *
+   * @param eachLecture
+   * @param date
+   * @param now
+   * @return
+   */
   private boolean isAttendable(EachLecture eachLecture, LocalDate date, LocalDateTime now) {
     LocalDate lectureStartDate = eachLecture.getStartDate().toLocalDateTime().toLocalDate();
     // 今日の授業でない場合
@@ -108,6 +131,12 @@ public class StudentContoroller {
     return now.isAfter(startTimestamp.toLocalDateTime()) && now.isBefore(endTimestamp.toLocalDateTime());
   }
 
+  /**
+   * 出席を登録する
+   *
+   * @param lectureId
+   * @param studentName
+   */
   private void registerAttendance(int lectureId, String studentName) {
     Attend attend = new Attend();
     attend.setEachLectureId(lectureId);
@@ -121,6 +150,10 @@ public class StudentContoroller {
     attendMapper.addAttend(attend);
   }
 
+  /**
+   * 出席ページ
+   * 講義のパスワードが間違っていた場合はreattendにリダイレクトする
+   */
   @GetMapping("attend")
   public String attend(@RequestParam int id, ModelMap model) {
     String name = lectureMapper.getName(id);
@@ -131,6 +164,10 @@ public class StudentContoroller {
     return "attend.html";
   }
 
+  /**
+   * 出席ページ
+   * 講義のパスワードが間違っていた場合はreattendにリダイレクトする
+   */
   @GetMapping("reattend")
   public String reattend(@RequestParam int id, ModelMap model) {
     String name = lectureMapper.getName(id);
@@ -147,7 +184,8 @@ public class StudentContoroller {
    * attendにデータが挿入されている生徒のみがアクセスできる
    */
   @GetMapping("lecture")
-  public String lecture(@RequestParam int id, ModelMap model) {
+  public String lecture(HttpServletRequest request, ModelMap model) {
+    int id = (int) request.getSession().getAttribute("lecture_id");
     String name = lectureMapper.getName(id);
 
     model.addAttribute("name", name);
@@ -192,14 +230,17 @@ public class StudentContoroller {
     } catch (Exception e) {
     }
 
-    return "redirect:/student/lecture" + "?id=" + id;
+    request.getSession().setAttribute("lecture_id", id);
+    return "redirect:/student/lecture";
   }
 
   /**
    * 講義ページ
    */
-  @GetMapping("each_lecture")
-  public String eachLecture(@RequestParam int id, @RequestParam int number, ModelMap model) {
+  @PostMapping("each_lecture")
+  public String eachLecture(HttpServletRequest request, ModelMap model) {
+    int id = Integer.parseInt(request.getParameter("lecture_id"));
+    int number = Integer.parseInt(request.getParameter("lecture_number"));
     String name = lectureMapper.getName(id);
     model.addAttribute("id", id);
 
@@ -212,5 +253,4 @@ public class StudentContoroller {
 
     return "each_lecture.html";
   }
-
 }

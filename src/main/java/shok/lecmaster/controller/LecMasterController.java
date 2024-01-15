@@ -5,10 +5,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @Controller
 public class LecMasterController {
-
+  /**
+   * トップページ
+   * ログインしたユーザーの権限が生徒の場合は/studentに、教師の場合は/teacherにリダイレクトする
+   *
+   * @param user
+   * @return
+   */
   @GetMapping("/")
   public String index(@AuthenticationPrincipal UserDetails user) {
     if (user == null) {
@@ -21,6 +26,4 @@ public class LecMasterController {
 
     return "index.html";
   }
-
-
 }
