@@ -10,6 +10,7 @@ public class EachLecture {
   Timestamp start_date;
   LocalTime start_time;
   LocalTime end_time;
+  String str_date;
 
   // セッター
   public void setId(int id) {
@@ -30,7 +31,11 @@ public class EachLecture {
   public void setEndTime(LocalTime end_time){
     this.end_time = end_time;
   }
+  
 
+  public void setStr_date(String str_date) {
+    this.str_date = str_date;
+  }
   // ゲッター
   public int getId() {
     return id;
@@ -50,5 +55,10 @@ public class EachLecture {
   public LocalTime getEndTime(){
     return end_time;
   }
+  public String getStr_date() {
+    return str_date;
+  }
+  
+
 
 }
