@@ -71,7 +71,7 @@
           <tr th:each="lecture, stat:${each_lectures}">
             <td class="sell-link">
               <a th:href="@{/teacher/each_lecture_setting(id=${id},number=${lecture.number})}">
-                第[[${lecture.number}]]回 [[${lecture.start_date}]]
+                第[[${lecture.number}]]回 ([[${lecture.str_date}]])
               </a>
             </td>
           </tr>

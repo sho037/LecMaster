@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -201,6 +202,12 @@ public class StudentContoroller {
     model.addAttribute("questions", questions);
 
     ArrayList<EachLecture> eachLectures = eachLectureMapper.getEachLectures(id);
+    for(EachLecture eachLecture : eachLectures) {
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+      String date = sdf.format(eachLecture.getStartDate());
+      String time = eachLecture.getStartTime().toString();
+      eachLecture.setStr_date(date + " " + time);
+    }
     model.addAttribute("each_lectures", eachLectures);
 
     return "lecture.html";

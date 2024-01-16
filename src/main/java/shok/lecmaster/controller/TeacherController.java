@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -87,6 +88,12 @@ public class TeacherController {
     model.addAttribute("message", message);
 
     ArrayList<EachLecture> eachLectures = eachLectureMapper.getEachLectures(id);
+    for(EachLecture eachLecture : eachLectures) {
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+      String date = sdf.format(eachLecture.getStartDate());
+      String time = eachLecture.getStartTime().toString();
+      eachLecture.setStr_date(date + " " + time);
+    }
     model.addAttribute("each_lectures", eachLectures);
 
     return "setting.html";
