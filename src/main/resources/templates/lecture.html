@@ -39,9 +39,15 @@
       <tbody>
         <tr th:each="lecture, stat:${each_lectures}">
           <td class="sell-link">
-            <a th:href="@{/student/each_lecture(id=${id},number=${lecture.number})}" class="text-decoration-none">
-              第[[${lecture.number}]]回 ([[${lecture.str_date}]])
-            </a>
+
+            <form method="post" th:action="@{/student/each_lecture}" class="text-decoration-none">
+              <input type="hidden" name="lecture_id" th:value="${id}">
+              <input type="hidden" name="lecture_number" th:value="${lecture.number}">
+              <button type="submit" class="btn btn-link">
+                第[[${lecture.number}]]回 ([[${lecture.str_date}]])
+              </button>
+            </form>
+
           </td>
         </tr>
       </tbody>
